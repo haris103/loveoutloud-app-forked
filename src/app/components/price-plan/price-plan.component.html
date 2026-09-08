@@ -1,0 +1,66 @@
+<div class="plans-wrapper">
+  <ion-grid>
+    <ion-row class="plans-row" justify-content-center>
+      @for (plan of pricePlans(); track plan.name) {
+      <ion-col size="12" size-md="6" size-lg="4">
+        <ion-card class="plan-card" [class.featured]="plan.name === 'Schools'">
+          <ion-card-header [style.background]="plan.bgColor" class="plan-header">
+            <!-- <div class="plan-icon-circle">
+              <ion-icon [name]="getPlanIcon(plan.name)" class="plan-icon"></ion-icon>
+            </div> -->
+            <div class="plan-text">
+              <h2 class="plan-name cust-title">{{ plan.name }}</h2>
+              <p class="plan-use">{{ plan.forUse }}</p>
+            </div>
+          </ion-card-header>
+
+          <ion-card-content class="plan-content">
+            @if (plan.price) {
+            <div class="plan-price">
+              @if (plan.price === 'Free') {
+              <span class="price-amount">{{plan.price}}</span>
+              }@else if(typeof plan.price !== 'string'){
+              <span class="price-period">/ year</span>
+              }@else {
+              <span class="price-amount f14"
+                [innerHTML]="typeof plan.price === 'string' ? plan.price : '$' + plan.price"></span>
+
+              }
+            </div>
+            }
+
+            @if (plan.pricePerStudent) {
+            <div class="plan-price">
+              <span class="price-label">Starting at</span>
+              <span class="price-amount">${{ plan.pricePerStudent[0].pricePerEnum }}</span>
+              <span class="price-period">/ year</span>
+            </div>
+
+            <ul class="price-tiers w100 d-flex col">
+              <div class="d-flex row spb">
+                <b>
+                  No of Students
+                </b>
+                <b>
+                  Cost Per Year
+                </b>
+              </div>
+              @for (tier of plan.pricePerStudent; track tier.maxNumberOfStudents) {
+              <li class="tier-item w100 d-flex row spb">
+                <span class="ion-text-center w-100">Upto {{ tier.maxNumberOfStudents }}</span> <span
+                  class="ion-text-center w-100">${{ tier.pricePerEnum }}</span>
+              </li>
+              }
+            </ul>
+            }
+
+            <ion-button [style.background]="plan.bgColor" fill="clear" class="plan-button" (click)="signUp(plan.name)">
+              Sign Up <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+</div>

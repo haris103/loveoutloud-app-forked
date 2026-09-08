@@ -1,0 +1,22 @@
+<app-header color="light" [showMenuButton]="true" title="Love Out Loud"></app-header>
+
+<ion-content [fullscreen]="true">
+
+  <app-video class="pr" [preload]="'auto'" [source]="resource.welcomeVideo" [autoplay]="true" [loop]="true" [showControls]="false"
+    [disableClickEvents]="true" [disableDoubleClick]="true">
+  </app-video>
+
+  <!-- Introcution -->
+  <app-intro class="pr"></app-intro>
+  <!-- Introcution end -->
+
+  <!-- Free Episodes -->
+  <app-free-episodes [episodes]="episodes()" class="pr"></app-free-episodes>
+  <!-- Free Episodes end -->
+
+  <!-- About Us -->
+  <app-about-us></app-about-us>
+  <!-- About Us end -->
+
+
+</ion-content>

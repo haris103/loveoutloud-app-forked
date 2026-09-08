@@ -1,0 +1,162 @@
+.plans-wrapper {
+    padding:5px 1rem;
+    text-align: center;
+  }
+  
+  
+  .plans-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .plans-subtitle {
+    color: #666;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .plan-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.44);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    padding-bottom: 1rem;
+    margin: 10px 0;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+  
+    &.featured {
+      position: relative;
+      border-radius: 20px;
+      animation: whiteGlowStrong 2s infinite ease-in-out;
+
+    }
+
+      
+  }
+  
+  .plan-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 1rem;
+  }
+  
+  .plan-icon-circle {
+    background: var(--ion-color-primary);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .plan-icon {
+    font-size: 2.5rem;
+    color: #fff;
+  }
+  
+  .plan-text {
+    .plan-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+      color: white;
+    }
+  
+    .plan-use {
+      color: #f4f4f4;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-top: 0.3rem;
+    }
+  }
+  
+  .plan-content {
+    padding: 0 1rem;
+    text-align: center;
+  }
+  
+  .plan-price {
+    margin: 1rem 0;
+    .price-amount {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    .price-period {
+      font-size: 0.9rem;
+      color: #777;
+      margin-left: 0.3rem;
+    }
+    .price-label {
+      font-size: 0.85rem;
+      color: var(--ion-color-medium);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+  }
+  
+  .price-tiers {
+    margin-top: 1rem;
+    padding: 0;
+    list-style: none;
+  
+    .tier-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: #555;
+  
+      .tier-icon {
+        color: var(--ion-color-success);
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+  
+  .plan-button {
+    margin-top: 1.5rem;
+    font-weight: 600;
+    border-radius: 10px;
+    color: white;
+  }
+  @keyframes whiteGlow {
+    0% {
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+      border-color: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    }
+    100% {
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+ 
+  
+  @keyframes whiteGlowStrong {
+    0% {
+      border-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+      border-color: rgba(0, 0, 0, 1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+    }
+    100% {
+      border-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+  }

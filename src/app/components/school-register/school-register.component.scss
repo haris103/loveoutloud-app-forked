@@ -1,0 +1,191 @@
+.registration-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-header {
+  margin-bottom: 30px;
+  text-align: center;
+
+  h1 {
+    color: #2c3e50;
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .intro-text {
+    color: #7f8c8d;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+}
+
+.form-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ecf0f1;
+  padding-bottom: 15px;
+
+  .step {
+    color: #bdc3c7;
+    font-weight: 500;
+    font-size: 13px;
+    padding: 0 10px 10px;
+    position: relative;
+    flex: 1;
+    text-align: center;
+
+    &.active {
+      color: #3498db;
+      font-weight: 600;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #3498db;
+      }
+    }
+  }
+}
+
+.registration-form {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+
+  .form-title {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .plan-description {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #34495e;
+      font-size: 14px;
+    }
+
+    .school-note {
+      color: #7f8c8d;
+      font-size: 13px;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    ion-select,
+    ion-input,
+    ion-textarea {
+      --background: #f8f9fa;
+      --padding-start: 12px;
+      --padding-end: 12px;
+      --border-radius: 6px;
+      --border-color: #dfe6e9;
+      --border-width: 1px;
+      --border-style: solid;
+      width: 100%;
+    }
+
+    ion-select {
+      --placeholder-color: #7f8c8d;
+      --placeholder-opacity: 1;
+    }
+
+    ion-textarea {
+      min-height: 100px;
+    }
+  }
+
+  .submit-btn {
+    --background: #3498db;
+    --background-activated: #2980b9;
+    --background-hover: #2980b9;
+    --border-radius: 6px;
+    height: 48px;
+    font-weight: 500;
+    margin: 30px 0 20px;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+
+    &[disabled] {
+      --background: #bdc3c7;
+      opacity: 1;
+    }
+  }
+
+  .form-footer {
+    color: #7f8c8d;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ecf0f1;
+
+    p {
+      margin-bottom: 8px;
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .registration-container {
+    padding: 15px;
+  }
+
+  .form-steps {
+    flex-wrap: wrap;
+
+    .step {
+      flex: 0 0 50%;
+      margin-bottom: 10px;
+      text-align: left;
+      padding-left: 0;
+    }
+  }
+
+  .registration-form {
+    padding: 20px 15px;
+  }
+}
+
+.invalid {
+  --border-color: #e74c3c !important;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Update the required asterisk */
+label span {
+  color: #e74c3c;
+  margin-left: 3px;
+}

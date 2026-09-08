@@ -1,0 +1,74 @@
+{
+  "/api": {
+    "target": "https://api.loveoutloudoz.com/api",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  },
+  "/wp": {
+    "target": "https://loveoutloudoz.com/wp",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/wp": ""
+    }
+  },
+  "/wpUpdateUser": {
+    "target": "https://loveoutloudoz.com/wp-json/wp/v2/users/",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/wpUpdateUser": ""
+    }
+  },
+  "/mp": {
+    "target": "https://loveoutloudoz.com/wp-json/mp/v1",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/mp": ""
+    }
+  },
+  "/fp": {
+    "target": "https://loveoutloudoz.com/login/",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/fp": ""
+    }
+  },
+  "/reg": {
+    "target": "https://loveoutloudoz.com/wp/?rest_route=/simple-jwt-login/v1",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/reg": ""
+    }
+  },
+  "/contactForm": {
+    "target": "https://loveoutloudoz.com/wp-json/gf/v2/forms/2",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/contactForm": ""
+    }
+  },
+  "/supportApiUrl": {
+    "target": "https://api.ap3api.com/v1",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/supportApiUrl": ""
+    }
+  },
+  "/hookaLeft": {
+    "target": "https://hookaleft.com/wp-admin/admin-ajax.php",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/hookaLeft": ""
+    }
+  }
+}

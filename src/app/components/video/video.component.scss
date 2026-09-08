@@ -1,0 +1,43 @@
+.video-container {
+    position: relative;
+    max-width: 100%;
+  }
+  .video-container.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  video {
+    width: 100%;
+    display: block;
+  }
+  .custom-controls {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(0,0,0,0.7);
+    align-items: center;
+  }
+  .custom-controls input[type="range"] {
+    flex-grow: 1;
+  }
+
+  /* Disable iOS native controls */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}

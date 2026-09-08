@@ -1,0 +1,7 @@
+{
+  "name": "Love Out Loud",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

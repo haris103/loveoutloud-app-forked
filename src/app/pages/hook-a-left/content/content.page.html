@@ -1,0 +1,77 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>{{data.eventName || 'Title'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon color="danger" slot="icon-only" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollY]="true" [scrollX]="true">
+
+  @if (swipperData()) {
+  <div class="swiper-container-full">
+    <app-swipper [data]="swipperData()!" [fullSize]="true"></app-swipper>
+  </div>
+  } @else {
+  <div id="content" [innerHTML]="sanitizedContent()" (click)="handleContentClick($event)">
+  </div>
+  }
+
+  <!-- Floating Actions Bar -->
+  <div class="floating-container" slot="fixed">
+    <div class="glass-bar">
+      @if (data.isImageOnly) {
+      <!-- Image Zoom Section -->
+      <div class="bar-section">
+        <div class="zoom-badge img-badge">
+          <ion-icon name="image-outline"></ion-icon>
+        </div>
+        <div class="btn-group">
+          <ion-button fill="clear" (click)="decreaseImg()">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="resetImg()" class="reset-btn">
+            <ion-icon name="refresh-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="increaseImg()">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <div class="vertical-divider"></div>
+      } @else {
+      <!-- Font Zoom Section -->
+      <div class="bar-section">
+        <div class="zoom-badge font-badge">
+          <ion-icon name="text-outline"></ion-icon>
+        </div>
+        <div class="btn-group">
+          <ion-button fill="clear" (click)="decreaseFont()">
+            <ion-icon name="remove-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="resetFont()" class="reset-btn">
+            <ion-icon name="refresh-outline"></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" (click)="increaseFont()">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+
+      <div class="vertical-divider"></div>
+      }
+
+      <!-- Close Section -->
+      <div class="bar-section close-section">
+        <ion-button fill="clear" (click)="closeModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

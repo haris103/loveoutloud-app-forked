@@ -1,0 +1,26 @@
+<div class="video-container" [class.disabled]="disabled()">
+  <video 
+    [style.width]="width()" 
+    [style.objectFit]="fit()" 
+    [style.height]="height()" 
+    #videoElement 
+    [src]="source()"
+    [autoplay]="autoplay()" 
+    [loop]="loop()" 
+    [muted]="muted()" 
+    [poster]="poster()"
+    [controls]="showControls() && !disabled()"
+    playsinline
+    webkit-playsinline
+    x-webkit-airplay="allow"
+    (click)="handleVideoClick()" 
+    (dblclick)="handleDoubleClick()"
+    (play)="play.emit()" 
+    (pause)="pause.emit()" 
+    (ended)="ended.emit()" 
+    (timeupdate)="timeUpdate.emit($event)"
+    (volumechange)="volumeChange.emit($event)" 
+    (error)="error.emit($event)">
+    Your browser does not support the video tag.
+  </video>
+</div>

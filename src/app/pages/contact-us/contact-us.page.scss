@@ -1,0 +1,102 @@
+.contact-page {
+    // --ion-background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+
+.contact-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    // width: 100%;
+    // max-width: 500px;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contact-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+}
+
+.contact-subheader {
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+.ion-input-group {
+    position: relative;
+    margin: 1rem 0;
+}
+
+.ion-input-group label {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    color: #636e72;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.ion-input-group input,
+.ion-input-group textarea {
+    width: 100%;
+    padding: 1rem 0;
+    border: none;
+    border-bottom: 1px solid #dfe6e9;
+    background: transparent;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.ion-input-group textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+.ion-input-group input:focus,
+.ion-input-group textarea:focus {
+    outline: none;
+    border-bottom-color: transparent;
+}
+
+.ion-input-group input:focus ~ label,
+.ion-input-group input:valid ~ label,
+.ion-input-group textarea:focus ~ label,
+.ion-input-group textarea:valid ~ label {
+    top: -0.5rem;
+    font-size: 0.8rem;
+    color: #0984e3;
+}
+
+.focus-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #0984e3;
+    transition: width 0.4s ease;
+}
+
+.ion-input-group input:focus ~ .focus-border,
+.ion-input-group textarea:focus ~ .focus-border {
+    width: 100%;
+}
+
+ion-button {
+    background: var(--green);
+    margin-top: 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white;
+}

@@ -1,0 +1,81 @@
+<app-header [showBackButton]="true" color="light" title="My Profile"></app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header class="blue-header" collapse="condense">
+    <ion-toolbar class="blue-header">
+      <ion-title color="light" size="large">
+        <h3 class="cust-title">My Profile</h3>
+      </ion-title>
+      <img class="h-40 p5" slot="end" [src]="resource.astriskIcon" alt="" />
+    </ion-toolbar>
+  </ion-header>
+  <div class="account-form-container bg-blue">
+    @if (!isLoading()) {
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="account-form">
+        <div class="form-section">
+          <div class="form-row pr">
+            <ion-input label="First Name" required labelPlacement="stacked" mode="md" fill="outline"
+            formControlName="firstName" type="text"></ion-input>
+            @if (formErrors()['firstName']) {
+              <app-validation-output type="error" [value]="formErrors()['firstName']"></app-validation-output>
+            }
+
+            <ion-input label="Last Name" required labelPlacement="stacked" mode="md" fill="outline"
+            formControlName="lastName" type="text"></ion-input>
+            <app-validation-output type="error" [value]="formErrors()['lastName']"></app-validation-output>
+
+            <ion-input label="Email Address" required labelPlacement="stacked" mode="md" fill="outline"
+            formControlName="email" type="email"></ion-input>
+            @if (formErrors()['email']) {
+              <app-validation-output type="error" [value]="formErrors()['email']"></app-validation-output>
+            }
+            <ion-input label="Address Line 1" labelPlacement="stacked" mode="md" fill="outline"
+            formControlName="addressLine1" type="text"></ion-input>
+            <ion-input label="Address Line 2" labelPlacement="stacked" mode="md" fill="outline"
+            formControlName="addressLine2" type="text"></ion-input>
+            <ion-input label="City" labelPlacement="stacked" mode="md" fill="outline" formControlName="city"
+            type="text"></ion-input>
+
+            <ion-select label="What State/Country are you in?" required labelPlacement="stacked" mode="md" fill="outline"
+              formControlName="location" interface="popover">
+              @for (location of locations; track location) {
+                <ion-select-option [value]="location">
+                  {{ location }}
+                </ion-select-option>
+              }
+            </ion-select>
+            @if(formErrors()['location']){
+              <app-validation-output type="error" [value]="formErrors()['location']"></app-validation-output>
+            }
+          </div>
+
+          <ion-input label="State/Province:" labelPlacement="stacked" mode="md" fill="outline" formControlName="state"
+          type="text"></ion-input>
+          <ion-input label="Zip/Postal Code:" labelPlacement="stacked" mode="md" fill="outline"
+          formControlName="postalCode" type="text"></ion-input>
+          <ion-input label="Phone:" labelPlacement="stacked" mode="md" fill="outline" formControlName="phone"
+          required></ion-input>
+
+          @if (formErrors()['phone']) {
+            <app-validation-output type="error" [value]="formErrors()['phone']"></app-validation-output>
+          }
+          <ion-input label="Church Name:" labelPlacement="stacked" mode="md" fill="outline" formControlName="churchName"
+          type="text"></ion-input>
+          <ion-input label="Church Suburb:" labelPlacement="stacked" mode="md" fill="outline"
+          formControlName="churchSuburb" type="text"></ion-input>
+          <ion-button type="submit" expand="block" [disabled]="!accountForm.valid" class="submit-btn">
+            Update Profile
+          </ion-button>
+
+          <ion-button expand="block" color="danger" fill="solid" (click)="deleteUser()" class="submit-btn">
+            Delete Account
+          </ion-button>
+        </div>
+      </form>
+      }@else {
+      <div class="hw100 ion-text-center ion-padding">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    }
+  </div>
+</ion-content>

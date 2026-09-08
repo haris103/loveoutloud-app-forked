@@ -1,0 +1,1853 @@
+{
+    "namespace": "give-api/v2",
+    "routes": {
+        "/give-api/v2": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "namespace": {
+                            "default": "give-api/v2",
+                            "required": false
+                        },
+                        "context": {
+                            "default": "view",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/forms/migrate/(?P<id>\\d+)": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "id": {
+                            "type": "integer",
+                            "description": "The ID of the form (v2) to migrate to v3.",
+                            "required": false
+                        }
+                    }
+                }
+            ]
+        },
+        "/give-api/v2/admin/forms/transfer": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "formId": {
+                            "type": "integer",
+                            "description": "The ID of the form (v3) to transfer donations (from v2).",
+                            "required": false
+                        },
+                        "changeUrl": {
+                            "type": "boolean",
+                            "default": true,
+                            "required": false
+                        },
+                        "delete": {
+                            "type": "boolean",
+                            "required": true
+                        },
+                        "redirect": {
+                            "type": "boolean",
+                            "default": true,
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/forms/transfer"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/form/(?P<id>[\\d]+)": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": []
+                }
+            ]
+        },
+        "/give-api/v2/form-grid": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/form-grid"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/payment-statuses": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/payment-statuses"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/payment-methods": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/payment-methods"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/form-performance": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/form-performance"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/top-donors": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/top-donors"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/recent-donations": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/recent-donations"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/income": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/income"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/income-breakdown": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/income-breakdown"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/average-donation": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/average-donation"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/total-donors": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/total-donors"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/total-income": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/total-income"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/reports/total-refunds": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "start": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "currency": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/reports/total-refunds"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/logs/get-logs": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "page": {
+                            "default": "1",
+                            "required": false
+                        },
+                        "type": {
+                            "default": "all",
+                            "required": false
+                        },
+                        "category": {
+                            "default": "",
+                            "required": false
+                        },
+                        "source": {
+                            "default": "",
+                            "required": false
+                        },
+                        "sort": {
+                            "default": "id",
+                            "required": false
+                        },
+                        "direction": {
+                            "default": "DESC",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/logs/get-logs"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/logs/flush-logs": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "DELETE"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "DELETE"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/logs/flush-logs"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/forms": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "page": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "perPage": {
+                            "type": "integer",
+                            "default": 30,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "status": {
+                            "type": "string",
+                            "default": "any",
+                            "enum": [
+                                "publish",
+                                "future",
+                                "draft",
+                                "pending",
+                                "trash",
+                                "auto-draft",
+                                "inherit",
+                                "any",
+                                "upgraded"
+                            ],
+                            "required": false
+                        },
+                        "search": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortColumn": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortDirection": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "required": false
+                        },
+                        "locale": {
+                            "type": "string",
+                            "default": "en_AU",
+                            "required": false
+                        },
+                        "return": {
+                            "type": "string",
+                            "default": "columns",
+                            "enum": [
+                                "model",
+                                "columns"
+                            ],
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/forms"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/donors": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "page": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "perPage": {
+                            "type": "integer",
+                            "default": 30,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "donations": {
+                            "type": "integer",
+                            "default": 0,
+                            "required": false
+                        },
+                        "search": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "start": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "form": {
+                            "type": "integer",
+                            "default": 0,
+                            "required": false
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortColumn": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortDirection": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "required": false
+                        },
+                        "locale": {
+                            "type": "string",
+                            "default": "en_AU",
+                            "required": false
+                        },
+                        "return": {
+                            "type": "string",
+                            "default": "columns",
+                            "enum": [
+                                "model",
+                                "columns"
+                            ],
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/donors"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/donations": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "page": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "perPage": {
+                            "type": "integer",
+                            "default": 30,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "form": {
+                            "type": "integer",
+                            "default": 0,
+                            "required": false
+                        },
+                        "search": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "start": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "donor": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortColumn": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortDirection": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "required": false
+                        },
+                        "locale": {
+                            "type": "string",
+                            "default": "en_AU",
+                            "required": false
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "default": false,
+                            "required": false
+                        },
+                        "return": {
+                            "type": "string",
+                            "default": "columns",
+                            "enum": [
+                                "model",
+                                "columns"
+                            ],
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/donations"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/subscriptions": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "page": {
+                            "type": "integer",
+                            "default": 1,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "perPage": {
+                            "type": "integer",
+                            "default": 30,
+                            "minimum": 1,
+                            "required": false
+                        },
+                        "donations": {
+                            "type": "integer",
+                            "default": 0,
+                            "required": false
+                        },
+                        "search": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "start": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "form": {
+                            "type": "integer",
+                            "default": 0,
+                            "required": false
+                        },
+                        "end": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortColumn": {
+                            "type": "string",
+                            "required": false
+                        },
+                        "sortDirection": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "required": false
+                        },
+                        "locale": {
+                            "type": "string",
+                            "default": "en_AU",
+                            "required": false
+                        },
+                        "testMode": {
+                            "type": "boolean",
+                            "default": false,
+                            "required": false
+                        },
+                        "return": {
+                            "type": "string",
+                            "default": "columns",
+                            "enum": [
+                                "model",
+                                "columns"
+                            ],
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/subscriptions"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/donors/view": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "isLegacy": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/donors/view"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/donations/view": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "isLegacy": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/donations/view"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/forms/view": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "isLegacy": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/forms/view"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/subscriptions/view": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "isLegacy": {
+                            "type": "boolean",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/subscriptions/view"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/donations/(?P<action>[\\S]+)": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST",
+                "DELETE"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST",
+                        "DELETE"
+                    ],
+                    "args": {
+                        "action": {
+                            "type": "string",
+                            "enum": [
+                                "delete",
+                                "setStatus",
+                                "resendEmailReceipt"
+                            ],
+                            "required": true
+                        },
+                        "ids": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "publish",
+                                "pending",
+                                "processing",
+                                "refunded",
+                                "revoked",
+                                "failed",
+                                "cancelled",
+                                "abandoned",
+                                "preapproval"
+                            ],
+                            "required": false
+                        }
+                    }
+                }
+            ]
+        },
+        "/give-api/v2/admin/subscriptions/(?P<action>[\\S]+)": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST",
+                "DELETE"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST",
+                        "DELETE"
+                    ],
+                    "args": {
+                        "action": {
+                            "type": "string",
+                            "enum": [
+                                "delete",
+                                "setStatus"
+                            ],
+                            "required": true
+                        },
+                        "ids": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "pending",
+                                "active",
+                                "expired",
+                                "completed",
+                                "refunded",
+                                "failing",
+                                "cancelled",
+                                "abandoned",
+                                "suspended",
+                                "paused"
+                            ],
+                            "required": false
+                        }
+                    }
+                }
+            ]
+        },
+        "/give-api/v2/admin/donors/delete": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "DELETE"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "DELETE"
+                    ],
+                    "args": {
+                        "ids": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "deleteDonationsAndRecords": {
+                            "type": "boolean",
+                            "default": "false",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/donors/delete"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/forms/(?P<action>[\\S]+)": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST",
+                "UPDATE",
+                "DELETE"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST",
+                        "UPDATE",
+                        "DELETE"
+                    ],
+                    "args": {
+                        "action": {
+                            "type": "string",
+                            "enum": [
+                                "trash",
+                                "restore",
+                                "delete",
+                                "duplicate",
+                                "edit"
+                            ],
+                            "required": true
+                        },
+                        "ids": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "author": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "status": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ]
+        },
+        "/give-api/v2/migrations/get-migrations": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "page": {
+                            "default": "1",
+                            "required": false
+                        },
+                        "sort": {
+                            "default": "run_order",
+                            "required": false
+                        },
+                        "direction": {
+                            "default": "ASC",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/migrations/get-migrations"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/migrations/run-migration": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "id": {
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/migrations/run-migration"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/onboarding/form": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/onboarding/form"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/onboarding/location": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "GET"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "GET"
+                    ],
+                    "args": {
+                        "countryCode": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/onboarding/location"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/onboarding/settings/addons": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "value": {
+                            "type": "string",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/onboarding/settings/addons"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/onboarding/settings/currency": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "value": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/onboarding/settings/currency"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/onboarding/settings/features": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "value": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/onboarding/settings/features"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/login": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "login": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "password": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/login"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/logout": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/logout"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/reset-password": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "email": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/reset-password"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/verify-email": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "email": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "g-recaptcha-response": {
+                            "type": "string",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/verify-email"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/donations": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/donations"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/profile": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "data": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "id": {
+                            "type": "int",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/profile"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/location": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "countryCode": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/location"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/avatar": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/avatar"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/password": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "newPassword": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/password"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/annual-receipts": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/annual-receipts"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/recurring-donations/subscriptions": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": []
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/recurring-donations/subscriptions"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/recurring-donations/subscription/cancel": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "id": {
+                            "type": "int",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/recurring-donations/subscription/cancel"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/donor-dashboard/recurring-donations/subscription/update": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "id": {
+                            "type": "int",
+                            "required": true
+                        },
+                        "payment_method": {
+                            "type": "array",
+                            "required": false
+                        },
+                        "amount": {
+                            "type": "int",
+                            "required": false
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/donor-dashboard/recurring-donations/subscription/update"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/sale-banner/hide": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "id": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/sale-banner/hide"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/admin/recommended-options": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "option": {
+                            "type": "string",
+                            "enum": [
+                                "givewp_donations_recurring_recommendation_dismissed",
+                                "givewp_donations_fee_recovery_recommendation_dismissed",
+                                "givewp_donations_designated_funds_recommendation_dismissed",
+                                "givewp_reports_recurring_recommendation_dismissed",
+                                "givewp_reports_fee_recovery_recommendation_dismissed",
+                                "givewp_donors_fee_recovery_recommendation_dismissed",
+                                "givewp_form_editor_donation_options_recurring_recommendation",
+                                "givewp_payment_gateway_fee_recovery_recommendation"
+                            ],
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/admin/recommended-options"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/welcome-banner/dismiss": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "action": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                }
+            ],
+            "_links": {
+                "self": [
+                    {
+                        "href": "https://loveoutloudoz.com/wp-json/give-api/v2/welcome-banner/dismiss"
+                    }
+                ]
+            }
+        },
+        "/give-api/v2/onboarding/settings/(?P<setting>\\w+)": {
+            "namespace": "give-api/v2",
+            "methods": [
+                "POST"
+            ],
+            "endpoints": [
+                {
+                    "methods": [
+                        "POST"
+                    ],
+                    "args": {
+                        "setting": {
+                            "type": "string",
+                            "required": true
+                        },
+                        "value": {
+                            "type": "string",
+                            "required": false
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "_links": {
+        "up": [
+            {
+                "href": "https://loveoutloudoz.com/wp-json/"
+            }
+        ]
+    }
+}

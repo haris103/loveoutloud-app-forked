@@ -1,0 +1,159 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <!-- Love Out Loud  Menu -->
+    <ion-menu menuId="mainMenu" contentId="main-content" type="overlay" class="modern-menu">
+      <ion-content class="menu-content">
+        <!-- Menu Header -->
+        <div class="menu-header d-flex row spb">
+          <!-- <app-logo></app-logo> -->
+
+          <div class="d-flex row">
+            <ion-avatar>
+              <img
+                src="https://static.vecteezy.com/system/resources/thumbnails/035/857/779/small/people-face-avatar-icon-cartoon-character-png.png" />
+            </ion-avatar>
+            <b class="ph5 ml-5">{{helper.fullname()}}</b>
+          </div>
+
+          <ion-buttons>
+            <ion-button (click)="logout()" shape="round" fill="solid" color="medium">
+              <ion-icon color="light" slot="icon-only" name="log-out"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+
+        <!-- Menu Items -->
+        <ion-list lines="none" class="menu-list">
+          @for (item of appPages; track item.title) { @if (item.subMenu.length
+          === 0) {
+          <ion-menu-toggle auto-hide="false" menu="mainMenu">
+            <ion-item (click)="activateItem($event); activeAccordion = undefined" [routerLink]="[item.url]"
+              routerDirection="root" lines="none" class="menu-item" routerLinkActive="active-item"
+              [routerLinkActiveOptions]="{ exact: true }" detail="false">
+              @if (item.icon) {
+              <ion-icon slot="start" [name]="item.icon" class="menu-icon"></ion-icon>
+              }@else{
+              <img slot="start" [src]="item.img" class="menu-img-icon" />
+              }
+              <ion-label>{{ item.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          } @else {
+          <!-- @if (item.url === '/lessons') {
+          <ion-item slot="header" (click)="comingSoon()" lines="none" class="menu-item parent-item">
+            <ion-icon slot="start" [name]="item.icon" class="menu-icon"></ion-icon>
+            <ion-label>{{ item.title }}</ion-label>
+          </ion-item>
+          }@else { -->
+          <ion-accordion-group [value]="activeAccordion" (ionChange)="activeAccordion = $any($event).detail.value"
+            expand="inset" class="menu-accordion">
+            <ion-accordion value="{{ item.title }}">
+              <ion-item slot="header" lines="none" class="menu-item parent-item">
+                <ion-icon slot="start" [name]="item.icon" class="menu-icon"></ion-icon>
+                <ion-label>{{ item.title }}</ion-label>
+              </ion-item>
+
+              <div slot="content" class="submenu-list">
+                @for (subItem of item.subMenu; track subItem.title) {
+                <ion-menu-toggle auto-hide="false" menu="mainMenu">
+                  <ion-item (click)="activateItem($event)" [routerLink]="[subItem.url]" routerDirection="root"
+                    lines="none" class="submenu-item" routerLinkActive="active-subitem"
+                    [routerLinkActiveOptions]="{ exact: true }" detail="false">
+                    <!-- <ion-icon slot="start" name="ellipse-outline" class="submenu-icon"></ion-icon> -->
+                    <ion-label>{{ subItem.title }}</ion-label>
+                  </ion-item>
+                </ion-menu-toggle>
+                }
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+          }
+          }
+          <!-- } -->
+        </ion-list>
+      </ion-content>
+
+      <!-- Footer -->
+      <div class="menu-footer">
+        <div class="footer-contact">
+          <div class="compact-info">
+            <ion-icon name="location-outline" class="compact-icon"></ion-icon>
+            <span class="compact-text">{{ PersonalInfo.mainlingAddress }}</span>
+          </div>
+          <div class="compact-info">
+            <ion-icon name="call-outline" class="compact-icon"></ion-icon>
+            <span class="compact-text">{{ PersonalInfo.phoneDisplay }}</span>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <a href="https://loveoutloudoz.com/privacy-policy/" target="_blank">Privacy Policy</a>
+          <span class="divider">|</span>
+          <a [routerLink]="['/terms-of-use']">Terms of use</a>
+        </div>
+      </div>
+    </ion-menu>
+
+    <!-- Hook A Left Menu -->
+    <ion-menu menuId="hookMenu" contentId="main-content" type="overlay" class="modern-menu">
+      <ion-content class="menu-content">
+        <!-- Menu Header -->
+        <div class="menu-header d-flex row" (click)="menuCtrl.close('hookMenu'); router.navigate(['/landing'])">
+          <ion-buttons>
+            <ion-button shape="round" fill="solid" color="medium">
+              <ion-icon color="light" slot="icon-only" name="chevron-back"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #222;">&nbsp; back to Love Out Loud</h3>
+        </div>
+
+        <!-- Menu Items -->
+        <ion-list lines="none" class="menu-list">
+          @for (item of hookMenuItems; track item.title) {
+          @if (item.subMenu.length === 0) {
+          <ion-menu-toggle auto-hide="false" menu="hookMenu">
+            <ion-item (click)="activateItem($event); activeAccordion = undefined; viewHookContent(item)" lines="none"
+              class="menu-item ion-no-padding" detail="false">
+              <ion-icon slot="start" [name]="item.icon" class="menu-icon"></ion-icon>
+              <ion-label>{{ item.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          } @else {
+          <ion-accordion-group [value]="activeAccordion" (ionChange)="activeAccordion = $any($event).detail.value"
+            expand="inset" class="menu-accordion">
+            <ion-accordion value="{{ item.title }}">
+              <ion-item slot="header" lines="none" class="menu-item parent-item">
+                <ion-icon slot="start" [name]="item.icon" class="menu-icon"></ion-icon>
+                <ion-label>{{ item.title }}</ion-label>
+              </ion-item>
+
+              <div slot="content" class="submenu-list">
+                @for (subItem of item.subMenu; track subItem.title) {
+                <ion-menu-toggle auto-hide="false" menu="hookMenu">
+                  <ion-item (click)="activateItem($event); viewHookContent(subItem)" lines="none" class="submenu-item"
+                    detail="false">
+                    <ion-label>{{ subItem.title }}</ion-label>
+                  </ion-item>
+                </ion-menu-toggle>
+                }
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+          }
+          }
+        </ion-list>
+      </ion-content>
+
+      <!-- Footer -->
+      <div class="menu-footer">
+        <div class="footer-links" style="margin-top: 20px;">
+          <a href="https://apps.loveoutloudoz.com/Home/PrivacyPolicy" target="_blank">Privacy Policy</a>
+          <span class="divider">|</span>
+          <a (click)="menuCtrl.close('hookMenu'); router.navigate(['/landing'])">Back to Love Out Loud</a>
+        </div>
+      </div>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

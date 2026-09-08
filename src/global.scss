@@ -1,0 +1,584 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+// @import "@ionic/angular/css/palettes/dark.system.css";
+
+@import "../node_modules/swiper/modules/navigation.css";
+@import "../node_modules/swiper/modules/pagination.css";
+@import "../node_modules/swiper/swiper.css";
+// @import '../swiper/swiper-bundle.min.css';
+@import "../node_modules/swiper/swiper-bundle.min.css";
+
+@font-face {
+  font-family: "Nicotine";
+  src: url("https://db.onlinewebfonts.com/t/ba42d447ceb2312b8e3d7317fd8e59a0.eot");
+  src: url("https://db.onlinewebfonts.com/t/ba42d447ceb2312b8e3d7317fd8e59a0.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/ba42d447ceb2312b8e3d7317fd8e59a0.woff2")
+      format("woff2"),
+    url("https://db.onlinewebfonts.com/t/ba42d447ceb2312b8e3d7317fd8e59a0.woff")
+      format("woff"),
+    url("https://db.onlinewebfonts.com/t/ba42d447ceb2312b8e3d7317fd8e59a0.ttf")
+      format("truetype"),
+    url("https://db.onlinewebfonts.com/t/ba42d447ceb2312b8e3d7317fd8e59a0.svg#Nicotine")
+      format("svg");
+}
+
+.cust-title {
+  font-family: "Nicotine", sans-serif;
+  font-weight: normal; /* Adjust if needed */
+  font-style: normal; /* Adjust if needed */
+}
+:root {
+  --dark-gray: #2f2e2e;
+  --blue: #3d6da1;
+  --blue-tint: #9dc2ea;
+  --orange: #dcab5a;
+  --red: #a3403c;
+  --green: #6f7a51;
+  --light-green: #dfdcc5;
+}
+
+/* iPhone SE (1st gen), iPhone 5, 5S, 5C - No notch, no extra padding required */
+@media only screen and (max-width: 320px) {
+  ion-content {
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+    --padding-left: 0px;
+    --padding-right: 0px;
+  }
+}
+
+/* iPhone 6, 7, 8, SE (2nd generation) - No notch */
+@media only screen and (min-width: 321px) and (max-width: 375px) {
+  ion-content {
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+    --padding-left: 0px;
+    --padding-right: 0px;
+  }
+}
+
+/* iPhone X, iPhone 11 Pro, iPhone 12 Mini - with notches */
+@media only screen and (min-width: 375px) and (max-width: 390px) {
+  ion-content {
+    --padding-top: env(safe-area-inset-top);
+    --padding-bottom: env(safe-area-inset-bottom);
+    --padding-left: env(safe-area-inset-left);
+    --padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* iPhone XR, iPhone 11, iPhone 12, 13, and 14 */
+@media only screen and (min-width: 390px) and (max-width: 428px) {
+  ion-content {
+    --padding-top: env(safe-area-inset-top);
+    --padding-bottom: env(safe-area-inset-bottom);
+    --padding-left: env(safe-area-inset-left);
+    --padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* iPhone 12 Pro Max, 13 Pro Max, 14 Plus */
+@media only screen and (min-width: 429px) and (max-width: 450px) {
+  ion-content {
+    --padding-top: env(safe-area-inset-top);
+    --padding-bottom: env(safe-area-inset-bottom);
+    --padding-left: env(safe-area-inset-left);
+    --padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* iPhone 14 Pro Max, 15 Pro Max, 16 Pro Max and larger */
+@media only screen and (min-width: 451px) {
+  ion-content {
+    --padding-top: env(safe-area-inset-top);
+    --padding-bottom: env(safe-area-inset-bottom);
+    --padding-left: env(safe-area-inset-left);
+    --padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* General Landscape Mode Adjustments */
+@media only screen and (orientation: landscape) {
+  ion-content {
+    --padding-top: env(safe-area-inset-top, 0px);
+    --padding-bottom: env(safe-area-inset-bottom, 0px);
+    --padding-left: env(safe-area-inset-left, 0px);
+    --padding-right: env(safe-area-inset-right, 0px);
+  }
+}
+
+.m5 {
+  margin: 5px;
+}
+
+ion-button {
+  text-transform: capitalize;
+  height: 50px;
+}
+.mh0 {
+  margin-left: 0;
+  margin-right: 0;
+}
+.custom-chip {
+  width: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background-color: var(--ion-color-primary-tint);
+  color: black;
+  height: auto;
+  padding: 5px 10px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.h30 {
+  height: 30px;
+}
+.v-center {
+  align-items: center;
+}
+.pt5 {
+  padding-top: 5px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+.w100-h-auto {
+  width: 100%;
+  height: auto;
+  min-height: 100%;
+}
+.app-text-color {
+  color: var(--ion-color-primary);
+}
+.text-light-color {
+  color: var(--ion-color-light);
+}
+.text-green {
+  color: var(--ion-color-success);
+}
+.text-red {
+  color: var(--ion-color-danger);
+}.f-wrap{
+  flex-wrap: wrap;
+}
+.text-gray {
+  color: lightgray;
+}
+.hw100 {
+  height: 100%;
+  width: 100%;
+}
+.w40 {
+  width: 40%;
+}
+.t-50 {
+  top: 50px;
+}
+.w50 {
+  width: 50%;
+}
+.h25 {
+  height: 25px;
+}
+.empty {
+  margin-bottom: 100px;
+}
+
+.top-right-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.color-white {
+  color: white;
+}
+.f-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.f-left {
+  align-items: flex-start;
+}
+
+.f33 {
+  font-size: 33px;
+}.f50 {
+  font-size: 50px;
+}
+.f140 {
+  font-size: 140px !important;
+}
+.f25 {
+  font-size: 25px !important;
+}
+.f14 {
+  font-size: 14px !important;
+}
+.f15 {
+  font-size: 15px !important;
+}
+.f18 {
+  font-size: 18px !important;
+}
+.f20 {
+  font-size: 20px !important;
+}
+.f10 {
+  font-size: 10px;
+}
+
+.pr {
+  position: relative;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+.ml10 {
+  margin-left: 10px;
+}
+.mt30 {
+  margin-top: 30px;
+}
+.mt50 {
+  margin-top: 50px;
+}
+.mt110 {
+  margin-top: 110px;
+}
+
+.mv30 {
+  margin: 30px 0;
+}
+.mv5 {
+  margin: 5px 0;
+}
+.mh10 {
+  margin: 0 10px 10px 10px;
+}
+.mv2 {
+  margin: 2px 0;
+}
+.f18 {
+  font-size: 18px;
+}
+
+.hw100 {
+  height: 100%;
+  width: 100%;
+}
+.h-300 {
+  height: 300px;
+}
+
+.f-r {
+  float: right;
+}
+
+.f-l {
+  float: left;
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+}
+
+.col {
+  flex-direction: column;
+}
+.trunc-text {
+  max-width: 100px;
+  white-space: nowrap; /* Ensure the text doesn't wrap to a new line */
+  overflow: hidden; /* Hide the overflow text */
+  text-overflow: ellipsis; /* Add ellipsis (...) at the end of the text */
+}
+
+.f14 {
+  font-size: 14px;
+}
+.under-line {
+  padding-bottom: 2px;
+  border-bottom: 2px solid var(--ion-color-primary);
+}
+.f16 {
+  font-size: 16px;
+}
+
+.f12 {
+  font-size: 12px;
+}
+
+.m0 {
+  margin: 0;
+}
+
+.w100 {
+  width: 100%;
+  height: auto;
+}
+
+.w100px {
+  width: 100px;
+}
+
+.mt15p {
+  margin-top: 15%;
+}
+
+.mt25p {
+  margin-top: 25%;
+}
+
+.pv5 {
+  padding: 5px 0;
+}
+
+.pv5-3 {
+  padding: 5px 0 5px 5px;
+}
+
+.pv2 {
+  padding: 2px 0;
+}
+
+.ph10 {
+  padding: 0 10px;
+}
+
+.ph5 {
+  padding: 0 5px;
+}
+
+.light-text {
+  color: white;
+}
+.br10 {
+  border-radius: 10px;
+}
+.p-5-10 {
+  padding: 5px 10px;
+}
+.p5 {
+  padding: 5px;
+}
+.p10 {
+  padding: 10px;
+}
+.t-bg {
+  background-color: transparent !important;
+}
+ion-card {
+  border-radius: 20px !important;
+}
+.capt {
+  text-transform: capitalize;
+}
+
+.no-bg-item {
+  --background: transparent;
+  background: transparent;
+}
+.no-bg {
+  --background: transparent !important;
+  background-color: transparent !important;
+  --background-color: transparent !important;
+  --ion-background-color: transparent !important;
+}
+.no-border {
+  border: none !important;
+}
+
+.spb {
+  justify-content: space-between;
+}
+
+.w80 {
+  width: 80%;
+}
+
+.w90 {
+  width: 90%;
+}
+.w95 {
+  width: 95%;
+}
+
+.m-auto {
+  margin: auto;
+}
+.min-w100 {
+  min-width: 100px;
+}
+
+.min-w150 {
+  min-width: 150px !important;
+}
+
+.w150 {
+  width: 150px !important;
+}
+
+.mx-w200 {
+  max-width: 200px;
+}
+
+.mx-w285 {
+  max-width: 285px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.loading-wrapper.sc-ion-loading-ios {
+  border-radius: 8px;
+  -webkit-padding-start: 34px;
+  padding-inline-start: 34px;
+  -webkit-padding-end: 34px;
+  padding-inline-end: 34px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-content: center !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.spe {
+  justify-content: space-evenly;
+}
+.p-a {
+  position: absolute;
+}
+.f22 {
+  font-size: 22px;
+}
+.f28 {
+  font-size: 28px;
+}
+.f35 {
+  font-size: 35px !important;
+}
+
+.fw-200 {
+  font-weight: 200;
+}
+.w-100 {
+  width: 100px;
+}
+.min-h-400 {
+  min-height: 400px;
+}
+.max-h-400 {
+  max-height: 400px;
+}
+.bg-blue {
+  background-color: var(--blue);
+}
+// .bg-blue-tint{
+//   background-color: var(--blue-tint);
+// }
+.bg-blue-g {
+  background: linear-gradient(to bottom, var(--blue), var(--blue-tint));
+}
+.bg-blue-g-c {
+  --background: linear-gradient(to bottom, var(--blue), var(--blue-tint));
+}
+.bg-green {
+  background-color: var(--green);
+}
+.bg-red {
+  background-color: var(--red);
+}
+.bg-orange {
+  background-color: var(--orange);
+}
+.h-60 {
+  height: 60px;
+}
+.h-40 {
+  height: 40px;
+}
+.blue-header {
+  --background: var(--blue) !important;
+  color: white !important;
+}
+
+.orange-header {
+  --background: var(--orange) !important;
+  color: white !important;
+}
+
+.green-header {
+  --background: var(--green) !important;
+  color: white !important;
+}
+
+.fullscreen-modal {
+  --width: 100%;
+  --height: 100%;
+  --border-radius: 0;
+  --max-width: 100%;
+  --max-height: 100%;
+}.ytwPlayerFullscreenControlsHost {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+}

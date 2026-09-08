@@ -1,0 +1,16 @@
+<app-header color="light" [showMenuButton]="true" title="Pricing"></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="pr w100 bg-blue-g">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title color="light" size="large"><h3 class="cust-title">Pricing</h3></ion-title>
+        <img class="h-40 p5" slot="end" [src]="resource.astriskIcon" alt="">
+      </ion-toolbar>
+    </ion-header>
+  
+    <!-- Price Plans -->
+     <app-price-plan [pricePlans]="pricePlans()"></app-price-plan>
+    <!-- Price Plans end -->
+  </div>
+</ion-content>

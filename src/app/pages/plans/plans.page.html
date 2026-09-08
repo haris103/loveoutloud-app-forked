@@ -1,0 +1,27 @@
+<app-header color="light" [showMenuButton]="true" title="Our Plans"></app-header>
+<ion-content [fullscreen]="true">
+
+  <!-- Home and chruch -->
+ <div class="hw100 bg-blue">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title color="light" size="large"><h3 class="cust-title">Our Plans</h3></ion-title>
+      <img class="h-40 p5" slot="end" [src]="resource.hashIcon" alt="">
+    </ion-toolbar>
+  </ion-header>
+
+  <app-our-plans [plans]="homeAndChurchPlans()"></app-our-plans>
+ </div>
+  <!-- Home and chruch end-->
+
+  <!-- SRE -->
+  <!-- <ion-header class="orange-header" collapse="condense">
+    <ion-toolbar class="orange-header">
+      <ion-title color="light" size="large"><h3 class="cust-title">Australian Schools</h3></ion-title>
+      <img class="h-40 p5" slot="end" [src]="resource.astriskIcon" alt="">
+    </ion-toolbar>
+  </ion-header>
+  <app-our-plans bgColor="var(--orange)" [plans]="sreAndRi()"></app-our-plans> -->
+  <!-- SRE end -->
+
+</ion-content>

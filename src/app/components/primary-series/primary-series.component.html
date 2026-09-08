@@ -1,0 +1,114 @@
+<div class="w100-h-auto ion-padding bg-blue-g pr">
+  <ion-header class="blue-header pr" collapse="condense">
+    <ion-toolbar class="blue-header">
+      <ion-title size="large">
+        <h3 class="m0 cust-title">Scope & Sequence</h3>
+      </ion-title>
+      <img class="h-40 p5" slot="end" [src]="resource.astriskIcon" alt="">
+    </ion-toolbar>
+
+  </ion-header>
+<br>
+  @if (lessonsBySeries()?.length; as series) {
+    <ion-card class="series-card">
+      <ion-card-header>
+        <ion-card-title class="series-title">{{ helper.parseLessonCode(lessonsBySeries()![0].lessonCode).title }}</ion-card-title>
+        <ion-card-subtitle class="series-subtitle">
+          <ion-badge color="danger" mode="ios">Series {{ helper.parseLessonCode(lessonsBySeries()![0].lessonCode).series }}</ion-badge>
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-searchbar 
+            [value]="searchTerm()"
+            (ionInput)="searchTerm.set($any($event).target.value); filterSeries()"
+            placeholder="Search a lesson..."
+            animated
+            class="custom-searchbar"
+            debounce="300"
+            mode="ios"
+            showClearButton="focus">
+          </ion-searchbar>
+        <ion-accordion-group class="lessons-group">
+          @if (searchTerm().trim() !== '') {
+            @for (item of filteredTable(); track item; let i = $index) {
+              <ion-accordion value="lesson-{{item.id}}" class="lesson-accordion">
+                <ion-item slot="header">
+                  <ion-label class="lesson-title">
+                    {{ i+1 }}. {{ item.title }}
+                  </ion-label>
+                </ion-item>
+  
+                <div slot="content" class="lesson-content">
+                  <div class="section">
+                    <b class="section-title">Big Idea</b>
+                    <p class="section-text">{{ item.bigIdea }}</p>
+                  </div>
+  
+                  <div class="section">
+                    <b class="section-title">Aims</b>
+                    <p class="section-text">{{ item.aims }}</p>
+                  </div>
+  
+                  <div class="section">
+                    <b class="section-title">Verses</b>
+                    <p class="section-text">{{ item.verses }}</p>
+                  </div>
+  
+                  <div class="section">
+                    <b class="section-title">Values</b>
+                    <p class="section-text">{{ item.values }}</p>
+                  </div>
+                </div>
+              </ion-accordion>
+            }
+            @empty {
+              <ion-item class="no-results">
+                <ion-label class="ion-text-center">
+                  No lessons match your search
+                </ion-label>
+              </ion-item>
+            }
+          }@else {
+            @for (item of lessonsBySeries(); track item; let i = $index) {
+              <ion-accordion value="lesson-{{item.id}}" class="lesson-accordion">
+                <ion-item slot="header">
+                  <ion-label class="lesson-title">
+                    {{ i+1 }}. {{ item.title }}
+                  </ion-label>
+                </ion-item>
+  
+                <div slot="content" class="lesson-content">
+                  <div class="section">
+                    <b class="section-title">Big Idea</b>
+                    <p class="section-text">{{ item.bigIdea }}</p>
+                  </div>
+  
+                  <div class="section">
+                    <b class="section-title">Aims</b>
+                    <p class="section-text">{{ item.aims }}</p>
+                  </div>
+  
+                  <div class="section">
+                    <b class="section-title">Verses</b>
+                    <p class="section-text">{{ item.verses }}</p>
+                  </div>
+  
+                  <div class="section">
+                    <b class="section-title">Values</b>
+                    <p class="section-text">{{ item.values }}</p>
+                  </div>
+                </div>
+              </ion-accordion>
+            }
+          }
+        </ion-accordion-group>
+      </ion-card-content>
+    </ion-card>
+  } @else {
+    <div class="loading-state">
+      <ion-spinner name="lines"></ion-spinner>
+      <p>Loading series data...</p>
+    </div>
+  }
+</div>

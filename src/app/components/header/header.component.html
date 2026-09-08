@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar [color]="color()">
+    <ion-buttons slot="start">
+      @if (showBackButton()) {
+        <ion-back-button 
+          [defaultHref]="backButtonHref()"
+          [text]="backButtonText()"
+          [icon]="backButtonIcon()">
+        </ion-back-button>
+      }
+      
+      @if (showMenuButton()) {
+        <ion-menu-button />
+      }
+    </ion-buttons>
+
+    <ion-title>{{ title() }}</ion-title>
+
+    <ion-buttons slot="end">
+      @for (button of endButtons(); track $index) {
+        <ion-button 
+          (click)="buttonClick.emit(button.id)"
+          [fill]="button.fill"
+          [shape]="button.shape">
+          @if (button.icon) {
+            <ion-icon 
+              [name]="button.icon" 
+              [slot]="button.iconSlot || 'icon-only'" />
+          }
+          {{ button.text }}
+        </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

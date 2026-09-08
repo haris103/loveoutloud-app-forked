@@ -1,0 +1,65 @@
+<div class="swiper" [class.full-size-swiper]="fullSize()">
+  <div class="swiper-wrapper">
+    @if (data()?.contentType !== 'component') {
+    @for (item of data()?.content; track item; let i = $index) {
+    <div class="swiper-slide" [class.full-size-slide]="fullSize()">
+      @if (fullSize() && data()?.contentType === 'image') {
+      <div class="full-image-wrapper">
+        <img (error)="helper.onImgError($event)" [src]="item.media" alt="" loading="lazy">
+      </div>
+      } @else {
+      <ion-card>
+        <ion-card-header class="ion-no-padding">
+          @if (data()?.contentType === 'image') {
+          <img (error)="helper.onImgError($event)" [src]="item.media" alt="" loading="lazy">
+          } @else if (isVimeo()) {
+          <app-vimeo-player class="swiper-video-player" [preload]="'auto'" [source]="item.media!" [autoplay]="false"
+            [loop]="true" [showControls]="true" [disableClickEvents]="true"
+            [disableDoubleClick]="true"></app-vimeo-player>
+          } @else {
+          <video controls (error)="helper.onImgError($event)" [src]="item.media" [poster]="item.poster"
+            preload="metadata">
+          </video>
+          }
+        </ion-card-header>
+        <ion-card-content class="card-content">
+          @if (item.title) {
+          <ion-card-title class="card-title">{{item.title}}</ion-card-title>
+          }
+          @if (item.description) {
+          <ion-card-subtitle class="card-subtitle">{{item.description}}</ion-card-subtitle>
+          }
+        </ion-card-content>
+      </ion-card>
+      }
+
+    </div>
+    }
+    } @else {
+    @for (comp of data()?.components; track comp; let i = $index) {
+    <div class="swiper-slide">
+      <ion-card class="min-h-400 d-flex col f-center">
+        @if (comp.icon) {
+        <div class="ion-text-center">
+          <ion-icon class="f140 text-light-color" [name]="comp.icon"></ion-icon>
+        </div>
+        }
+        <ion-card-content class="card-content">
+          @if (comp.title) {
+          <ion-card-title class="card-title ion-text-center">
+            <h3 class="f25 cust-title">{{comp.title}}</h3>
+          </ion-card-title>
+          }
+          @if (comp.description) {
+          <ion-card-subtitle [class.ion-text-center]="textCenter()" class="card-subtitle f15 fw200 pr"
+            [innerHTML]="comp.description"></ion-card-subtitle>
+          }
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+    }
+    }
+  </div>
+  <div class="swiper-pagination"></div>
+</div>

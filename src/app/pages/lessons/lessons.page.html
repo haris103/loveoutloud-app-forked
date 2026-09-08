@@ -1,0 +1,169 @@
+<app-header [showMenuButton]="true" color="light" [title]="lessonsData().title || ''"></app-header>
+
+<ion-content [fullscreen]="true" class="premium-content">
+  <ion-header class="blue-header" collapse="condense">
+    <ion-toolbar class="blue-header">
+      <ion-title color="light" size="large">
+        <h3 class="cust-title">{{lessonsData().title || ''}}</h3>
+      </ion-title>
+      <img class="h-40 p5" slot="end" [src]="resource.contactUsIcon" alt="" />
+    </ion-toolbar>
+  </ion-header>
+
+
+  <!-- Premium Segmented Control -->
+  <div class="premium-segment-container">
+    <ion-segment [(ngModel)]="seriesSeg" (ionChange)="segmentChanged($event)" class="premium-segment">
+      @for (item of lessonsData().series; track $index) {
+      <ion-segment-button [value]="item.code" class="premium-segment-button">
+        <ion-label>{{item.title}}</ion-label>
+      </ion-segment-button>
+      }
+    </ion-segment>
+  </div>
+
+  <!-- Premium Search Bar -->
+  <div class="premium-search-container">
+    <ion-searchbar [(ngModel)]="searchQuery" (input)="filterLessons($event)" placeholder="Search lessons..." animated
+      debounce="250" class="premium-searchbar" mode="ios"></ion-searchbar>
+  </div>
+
+  <!-- Premium Content Section -->
+  <div class="premium-content-section">
+    @if (searchQuery && filteredLessons.length > 0) {
+    @for (item of filteredLessons; track $index) {
+    <div class="premium-lesson-card">
+      <!-- Video Player with Premium Styling -->
+      <div class="video-container">
+        <app-vimeo-player class="premium-video-player" [poster]="'assets/premium-video-poster.jpg'" [preload]="'auto'"
+          [source]="item?.shareLink!" [autoplay]="false" [loop]="true" [showControls]="true" [disableClickEvents]="true"
+          [disableDoubleClick]="true"></app-vimeo-player>
+        <!-- <div class="video-badge">Premium</div> -->
+      </div>
+
+      <!-- Lesson Details -->
+      <div class="lesson-details">
+        <div class="lesson-header">
+          <h2 class="lesson-title">{{helper.parseLessonCode(item.lessonCode).episode}} • {{item.title}}</h2>
+
+        </div>
+
+        <!-- Big Idea Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="bulb-outline" class="section-icon"></ion-icon>
+            <h3>Big Idea</h3>
+          </div>
+          <p class="section-content">{{item.bigIdea}}</p>
+        </div>
+
+        <!-- Aims Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="flag-outline" class="section-icon"></ion-icon>
+            <h3>Aims</h3>
+          </div>
+          <p class="section-content">{{item.aims}}</p>
+        </div>
+
+        <!-- Verses Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="book-outline" class="section-icon"></ion-icon>
+            <h3>Verses</h3>
+          </div>
+          <p class="section-content">{{item.verses}}</p>
+        </div>
+
+        <!-- Values Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="heart-outline" class="section-icon"></ion-icon>
+            <h3>Values</h3>
+          </div>
+          <p class="section-content">{{item.values}}</p>
+        </div>
+      </div>
+    </div>
+    }
+    }
+    @if (lessonsBySeries() && lessonsBySeries().length > 0 && !searchQuery) {
+    @for (item of lessonsBySeries(); track $index) {
+    <div class="premium-lesson-card">
+      <!-- Video Player with Premium Styling -->
+      <div class="video-container">
+        <app-vimeo-player class="premium-video-player" [poster]="'assets/premium-video-poster.jpg'" [preload]="'auto'"
+          [source]="item?.shareLink!" [autoplay]="false" [loop]="true" [showControls]="true" [disableClickEvents]="true"
+          [disableDoubleClick]="true"></app-vimeo-player>
+        <!-- <div class="video-badge">Premium</div> -->
+      </div>
+
+      <!-- Lesson Details -->
+      <div class="lesson-details">
+        <div class="lesson-header">
+          <h2 class="lesson-title">{{helper.parseLessonCode(item.lessonCode).episode}} • {{item.title}}</h2>
+
+        </div>
+
+        <!-- Big Idea Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="bulb-outline" class="section-icon"></ion-icon>
+            <h3>Big Idea</h3>
+          </div>
+          <p class="section-content">{{item.bigIdea}}</p>
+        </div>
+
+        <!-- Aims Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="flag-outline" class="section-icon"></ion-icon>
+            <h3>Aims</h3>
+          </div>
+          <p class="section-content">{{item.aims}}</p>
+        </div>
+
+        <!-- Verses Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="book-outline" class="section-icon"></ion-icon>
+            <h3>Verses</h3>
+          </div>
+          <p class="section-content">{{item.verses}}</p>
+        </div>
+
+        <!-- Values Section -->
+        <div class="detail-section">
+          <div class="section-header">
+            <ion-icon name="heart-outline" class="section-icon"></ion-icon>
+            <h3>Values</h3>
+          </div>
+          <p class="section-content">{{item.values}}</p>
+        </div>
+
+      </div>
+    </div>
+    }
+    }
+    @else if (searchQuery && filteredLessons.length === 0) {
+    <div class="premium-empty-state">
+      <div class="empty-state-icon">
+        <ion-icon name="search-outline"></ion-icon>
+      </div>
+      <h3>No results found</h3>
+      <p>Try different search terms</p>
+      <ion-button fill="outline" shape="round" (click)="clearSearch()" class="empty-state-button">
+        Clear search
+      </ion-button>
+    </div>
+    } @else if (filteredLessons.length === 0 && lessonsBySeries().length === 0) {
+    <div class="premium-empty-state">
+      <div class="empty-state-icon">
+        <ion-icon name="videocam-off-outline"></ion-icon>
+      </div>
+      <h3>No lessons available</h3>
+      <p>Check back later for new content</p>
+    </div>
+    }
+  </div>
+</ion-content>

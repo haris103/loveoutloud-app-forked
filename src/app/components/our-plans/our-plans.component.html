@@ -1,0 +1,39 @@
+<div class="plans-container">
+  @for (plan of plans(); track plan.title) {
+    <div class="plan-card">
+      <div class="plan-icon">
+        @if (plan.icon) {
+          <ion-icon color="dark" [name]="plan.icon"></ion-icon>
+        }@else {
+          <img [src]="plan.img" alt="">
+        }
+      </div>
+      
+      <h3 class="plan-title cust-title">{{ plan.title }}</h3>
+      
+      <p class="plan-description" [innerHTML]="plan.description"></p>
+      
+      <div class="benefits-list">
+        @for (benefit of plan.benefits; track benefit) {
+          <div class="benefit-item">
+            <ion-icon name="checkmark" class="check-icon"></ion-icon>
+            <span>{{ benefit }}</span>
+          </div>
+        }
+      </div>
+      
+      @if (!helper.isLoggedIn) {
+        <ion-button
+        [style.background]="plan.buttonColor" 
+        [style.color]="'white'" 
+        expand="block" 
+        shape="round"
+        fill="clear"
+        class="action-button"
+      >
+        {{ plan.buttonText }}
+      </ion-button>
+      }
+    </div>
+  }
+</div>

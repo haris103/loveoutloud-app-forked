@@ -1,0 +1,129 @@
+<div class="account-form-container bg-blue">
+  <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="account-form">
+    <p class="intro-text">
+      After you sign up, you'll be able to log in, access and download the
+      videos and supporting materials.
+    </p>
+
+    <div class="form-section">
+      <h3 class="section-title">Personal Information</h3>
+
+      <div class="form-row">
+        <ion-input label="First Name" required labelPlacement="stacked" mode="md" fill="outline"
+        formControlName="firstName" type="text"></ion-input>
+        @if (formErrors()['firstName']) {
+          <app-validation-output type="error" [value]="formErrors()['firstName']"></app-validation-output>
+        }
+
+        <ion-input label="Last Name" required labelPlacement="stacked" mode="md" fill="outline"
+        formControlName="lastName" type="text"></ion-input>
+        <app-validation-output type="error" [value]="formErrors()['lastName']"></app-validation-output>
+      </div>
+
+      <ion-input label="Email Address" required labelPlacement="stacked" mode="md" fill="outline"
+      formControlName="email" type="email"></ion-input>
+      <app-validation-output type="error" [value]="formErrors()['email']"></app-validation-output>
+
+      <ion-input label="Phone Number" required labelPlacement="stacked" mode="md" fill="outline" formControlName="phone"
+      type="tel"></ion-input>
+      <app-validation-output class="pr" type="error" [value]="formErrors()['phone']"></app-validation-output>
+
+      <!-- <p class="form-note">This will be used to log in to your account.</p> -->
+    </div>
+
+    <div class="form-section">
+      <h3 class="section-title">Account Security</h3>
+
+      <ion-input label="Password" required labelPlacement="stacked" mode="md" fill="outline" formControlName="password"
+        [type]="showPassword ? 'text':'password'">
+        <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear" shape="round">
+          <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off':'eye'"></ion-icon>
+        </ion-button>
+      </ion-input>
+      <app-validation-output type="error" [value]="formErrors()['password']"></app-validation-output>
+
+      <div class="password-strength">
+        <div class="strength-meter">
+          <div class="strength-bar" [class]="passwordStrengthClass()"></div>
+        </div>
+        <app-validation-output [value]="passwordStrength()" type="info"></app-validation-output>
+      </div>
+
+      <ion-input label="Confirm Password" required labelPlacement="stacked" mode="md" fill="outline"
+        formControlName="confirmPassword" [type]="showPassword ? 'text':'password'">
+        <ion-button slot="end" (click)="showPassword = !showPassword" fill="clear" shape="round">
+          <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off':'eye'"></ion-icon>
+        </ion-button></ion-input>
+        <app-validation-output [value]="passwordMatchError()"></app-validation-output>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Organization Details</h3>
+
+        <ion-input label="Church Name" labelPlacement="stacked" mode="md" fill="outline" formControlName="churchName"
+        type="text"></ion-input>
+
+        <ion-input label="Church Suburb" labelPlacement="stacked" mode="md" fill="outline" formControlName="churchSuburb"
+        type="text"></ion-input>
+
+        <div class="form-group radio-group">
+          <ion-label class="radio-group-label">Type of Use <span class="required radio-group-lbl">*</span></ion-label>
+          <ion-radio-group formControlName="useType">
+            <ion-item lines="none">
+              <ion-radio mode="md" value="home" labelPlacement="start">Home</ion-radio>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-radio mode="md" value="church" labelPlacement="start">Church</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+          <app-validation-output type="error" [value]="formErrors()['useType']"></app-validation-output>
+        </div>
+
+        <ion-select label="What State/Country are you in?" required labelPlacement="stacked" mode="md" fill="outline"
+          formControlName="location" interface="popover">
+          @for (location of locations; track location) {
+            <ion-select-option [value]="location">
+              {{ location }}
+            </ion-select-option>
+          }
+        </ion-select>
+        <app-validation-output type="error" [value]="formErrors()['location']"></app-validation-output>
+
+        <ion-select label="How did you hear about us?" labelPlacement="stacked" mode="md" fill="outline"
+          formControlName="referralSource" interface="popover">
+          @for (source of referralSources; track source) {
+            <ion-select-option [value]="source">
+              {{ source }}
+            </ion-select-option>
+          }
+        </ion-select>
+
+        <ion-textarea label="How will you use these lessons?" required labelPlacement="stacked" mode="md" fill="outline"
+        formControlName="usageDescription" rows="3"></ion-textarea>
+        <app-validation-output type="error" [value]="formErrors()['usageDescription']"></app-validation-output>
+      </div>
+
+      <div class="form-section">
+        <ion-item lines="none" class="form-group checkbox-item">
+          <ion-checkbox formControlName="mailingList" slot="start"></ion-checkbox>
+          <ion-label>Add me to your mailing list</ion-label>
+        </ion-item>
+
+        <ion-item lines="none" class="form-group checkbox-item">
+          <ion-checkbox formControlName="termsAccepted" slot="start"></ion-checkbox>
+          <ion-label>I agree to your terms of use and privacy policy
+            <span class="required">*</span></ion-label>
+          </ion-item>
+          <app-validation-output type="error" [value]="formErrors()['termsAccepted']"></app-validation-output>
+        </div>
+
+        <ion-button type="submit" expand="block" [disabled]="!accountForm.valid" class="submit-btn">
+          Confirm Subscription
+        </ion-button>
+
+        <p class="outro-text">
+          <strong>After you sign up, you'll be able to log in, access and download the
+          videos and supporting materials.</strong>
+        </p>
+      </form>
+    </div>

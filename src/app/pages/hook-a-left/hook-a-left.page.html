@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  @if (!isLoading) {
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button menu="hookMenu"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Hook A Left</ion-title>
+    </ion-toolbar>
+  }
+</ion-header>
+<ion-content [fullscreen]="true" class="content-container">
+
+  <div [hidden]="isLoading">
+    <div class="sticky-container">
+
+      <!-- Zoomable image container -->
+      <div #miniScreen id="miniScreen" class="zoom-container">
+        <img #zoomImage class="zoomable-image" src="../../assets/img.PNG" alt="">
+      </div>
+      <!-- Add click handler to the image -->
+      <div id="normalScreen" style="overflow: auto; -webkit-overflow-scrolling: touch;">
+        <!-- <canvas id="myCanvas" width="1584" height="900"></canvas> -->
+        <div button class="row d-flex btns">
+          @for (item of events; track item) {
+            <div (click)="viewContent(item)" class="nmbr d-flex f-center">
+              <ion-note>{{item.eventId}}</ion-note>
+            </div>
+          }
+        </div>
+      </div>
+
+
+      <ion-searchbar [(ngModel)]="searchText" (ionInput)="onSearch()" mode="ios" class="z99"
+        placeholder="Search Content here..." inputmode="text" type="text" [debounce]="250">
+      </ion-searchbar>
+    </div>
+    <div class="scrollable-container">
+      @if (searchText.trim() === '') {
+        <ion-list class="z1">
+          @for (item of events; track item) {
+            <ion-item (click)="viewContent(item)" lines="full" button class="row d-flex spb">
+              <div class="nmbr d-flex f-center">
+                <ion-note>{{item.eventId}}</ion-note>
+              </div>
+              <ion-label>{{item.eventName}}</ion-label>
+            </ion-item>
+          }
+        </ion-list>
+      }
+      @if (searchText.trim() !== '' || filteredKeys.length > 0) {
+        <ion-list class="z1">
+          @for (item of filteredKeys; track item) {
+            <ion-item (click)="viewContent(item)" lines="full" button class="row d-flex spb"
+              >
+              <div class="nmbr d-flex f-center">
+                <ion-note>{{item.eventId}}</ion-note>
+              </div>
+              <ion-label>{{item.eventName}}</ion-label>
+            </ion-item>
+          }
+        </ion-list>
+      }
+    </div>
+
+  </div>
+
+  @if (isLoading) {
+    <div>
+      <video [controls]="false" preload="auto" [autoplay]="true" [loop]="true" src="../../assets/loading-white.mp4"
+      playsinline webkit-playsinline controlsList="nodownload nofullscreen noremoteplayback"></video>
+    </div>
+  }
+</ion-content>
