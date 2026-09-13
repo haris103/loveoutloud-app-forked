@@ -72,3 +72,10 @@ Thumbs.db
 /android
 /ios
 /www
+
+# Android signing keys (never commit)
+*.jks
+*.keystore
+*.pem
+upload-keystore.jks
+upload_certificate.pem
