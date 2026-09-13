@@ -44,7 +44,7 @@
       <!-- Lesson Details -->
       <div class="lesson-details">
         <div class="lesson-header">
-          <h2 class="lesson-title">{{ $index + 1 }} • {{item.title}}</h2>
+          <h2 class="lesson-title">{{helper.parseLessonCode(item.lessonCode).episode}} • {{item.title}}</h2>
 
         </div>
 
@@ -101,7 +101,7 @@
       <!-- Lesson Details -->
       <div class="lesson-details">
         <div class="lesson-header">
-          <h2 class="lesson-title">{{ $index + 1 }} • {{item.title}}</h2>
+          <h2 class="lesson-title">{{helper.parseLessonCode(item.lessonCode).episode}} • {{item.title}}</h2>
 
         </div>
 
