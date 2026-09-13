@@ -79,3 +79,7 @@ Thumbs.db
 *.pem
 upload-keystore.jks
 upload_certificate.pem
+
+# Local test builds
+*.apk
+*.aab
