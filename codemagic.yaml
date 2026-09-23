@@ -23,17 +23,25 @@ workflows:
 
     scripts:
 
-      # 1. Install dependencies
+      # ---------------------------------------------------------
+      # 1. Install npm dependencies
+      # ---------------------------------------------------------
       - name: Install npm dependencies
         script: |
           npm ci
 
-      # 2. Build the web application
+
+      # ---------------------------------------------------------
+      # 2. Build web application
+      # ---------------------------------------------------------
       - name: Build web assets
         script: |
           npm run build
 
-      # 3. Create/sync the native iOS project
+
+      # ---------------------------------------------------------
+      # 3. Create / sync Capacitor iOS project
+      # ---------------------------------------------------------
       - name: Add / sync Capacitor iOS
         script: |
           if [ ! -d "ios" ]; then
@@ -42,79 +50,226 @@ workflows:
 
           npx cap sync ios
 
-      # 4. Generate the iOS App Icon
-      # Keeps your original file:
+
+      # ---------------------------------------------------------
+      # 4. Prepare your existing app icon
+      #
+      # Your REAL icon remains:
+      #
       # resources/app-icon.png
       #
-      # A temporary icon.png is created only during the build
-      # because @capacitor/assets expects icon.png.
+      # We temporarily create:
+      #
+      # resources/icon.png
+      #
+      # We do NOT rename your original file.
+      # ---------------------------------------------------------
       - name: Generate iOS app icon
         script: |
-          echo "Preparing Love Out Loud app icon..."
+          echo "=========================================="
+          echo "Preparing Love Out Loud iOS App Icon"
+          echo "=========================================="
+
+          if [ ! -f "resources/app-icon.png" ]; then
+            echo "ERROR: resources/app-icon.png was not found!"
+            exit 1
+          fi
+
+          echo "Source icon found:"
+          ls -lh resources/app-icon.png
+
+          echo ""
+          echo "Checking icon dimensions..."
+
+          sips -g pixelWidth -g pixelHeight resources/app-icon.png
+
+          WIDTH=$(sips -g pixelWidth resources/app-icon.png | tail -1 | awk '{print $2}')
+          HEIGHT=$(sips -g pixelHeight resources/app-icon.png | tail -1 | awk '{print $2}')
+
+          echo "Icon width: $WIDTH"
+          echo "Icon height: $HEIGHT"
+
+          if [ "$WIDTH" -lt 1024 ] || [ "$HEIGHT" -lt 1024 ]; then
+            echo "ERROR: Your app icon must be at least 1024x1024."
+            exit 1
+          fi
+
+          echo ""
+          echo "Creating temporary icon.png..."
 
           cp resources/app-icon.png resources/icon.png
+
+          echo "Temporary icon created:"
+          ls -lh resources/icon.png
+
+          echo ""
+          echo "Removing old generated AppIcon to prevent stale icons..."
+
+          find ios -type d -name "AppIcon.appiconset" -prune -exec rm -rf {} +
+
+          echo ""
+          echo "Generating iOS icons..."
 
           npx @capacitor/assets generate \
             --ios \
             --assetPath resources
 
-          rm resources/icon.png
+          echo ""
+          echo "Removing temporary icon.png..."
 
-          echo "App icon generation completed."
+          rm -f resources/icon.png
 
-      # 5. Verify that the iOS AppIcon was generated
+          echo ""
+          echo "iOS icon generation finished."
+
+
+      # ---------------------------------------------------------
+      # 5. Find and verify the generated AppIcon
+      # ---------------------------------------------------------
       - name: Verify iOS app icon
         script: |
-          echo "Checking generated iOS AppIcon..."
+          echo "=========================================="
+          echo "Checking generated iOS AppIcon"
+          echo "=========================================="
 
-          if [ -d "ios/App/Assets.xcassets/AppIcon.appiconset" ]; then
-            echo "SUCCESS: AppIcon.appiconset exists."
-            ls -la ios/App/Assets.xcassets/AppIcon.appiconset
+          APP_ICON_PATH=$(find ios -type d -name "AppIcon.appiconset" -print -quit)
+
+          if [ -n "$APP_ICON_PATH" ]; then
+
+            echo ""
+            echo "SUCCESS!"
+            echo "AppIcon.appiconset found at:"
+            echo "$APP_ICON_PATH"
+
+            echo ""
+            echo "Contents of AppIcon.appiconset:"
+            echo "------------------------------------------"
+
+            ls -lah "$APP_ICON_PATH"
+
+            echo ""
+            echo "Checking Contents.json..."
+
+            if [ -f "$APP_ICON_PATH/Contents.json" ]; then
+              echo "SUCCESS: Contents.json exists."
+            else
+              echo "ERROR: Contents.json is missing."
+              exit 1
+            fi
+
+            echo ""
+            echo "Checking generated icon images..."
+
+            IMAGE_COUNT=$(find "$APP_ICON_PATH" -type f \( \
+              -name "*.png" -o \
+              -name "*.jpg" -o \
+              -name "*.jpeg" \
+              \) | wc -l)
+
+            echo "Generated icon image count: $IMAGE_COUNT"
+
+            if [ "$IMAGE_COUNT" -gt 0 ]; then
+              echo "SUCCESS: iOS icon images were generated."
+            else
+              echo "ERROR: No icon images were generated."
+              exit 1
+            fi
+
           else
-            echo "ERROR: AppIcon.appiconset was not generated."
+
+            echo ""
+            echo "ERROR: AppIcon.appiconset was NOT found."
+            echo ""
+            echo "Searching for Assets.xcassets..."
+            find ios -type d -name "Assets.xcassets" -print
+
+            echo ""
+            echo "Searching for AppIcon files..."
+            find ios -iname "*AppIcon*" -print
+
             exit 1
+
           fi
 
+
+      # ---------------------------------------------------------
       # 6. Install CocoaPods
+      # ---------------------------------------------------------
       - name: Install CocoaPods
         script: |
           cd ios/App
           pod install
 
+
+      # ---------------------------------------------------------
       # 7. Set up code signing
+      # ---------------------------------------------------------
       - name: Set up code signing
         script: |
           xcode-project use-profiles
 
+
+      # ---------------------------------------------------------
       # 8. Set iOS version
+      # ---------------------------------------------------------
       - name: Set iOS version
         script: |
           cd ios/App
+
           agvtool new-marketing-version "2.4.2"
 
+          echo "iOS marketing version set to 2.4.2"
+
+
+      # ---------------------------------------------------------
       # 9. Set iOS build number
+      #
+      # Build 3 already exists in TestFlight according to
+      # your screenshot, so the next build should be 4.
+      # ---------------------------------------------------------
       - name: Set iOS build number
         script: |
           cd ios/App
-          agvtool new-version -all "3"
-          echo "iOS build number set to 3"
 
+          agvtool new-version -all "4"
+
+          echo "iOS build number set to 4"
+
+
+      # ---------------------------------------------------------
       # 10. Build IPA
+      # ---------------------------------------------------------
       - name: Build IPA
         script: |
+          echo "=========================================="
+          echo "Building Love Out Loud IPA"
+          echo "=========================================="
+
           xcode-project build-ipa \
             --workspace "$XCODE_WORKSPACE" \
             --scheme "$XCODE_SCHEME"
 
+
+    # -----------------------------------------------------------
+    # Artifacts
+    # -----------------------------------------------------------
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
 
+
+    # -----------------------------------------------------------
+    # App Store Connect / TestFlight
+    # -----------------------------------------------------------
     publishing:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
 
+
+    # -----------------------------------------------------------
+    # Trigger
+    # -----------------------------------------------------------
     triggering:
       events:
         - push
