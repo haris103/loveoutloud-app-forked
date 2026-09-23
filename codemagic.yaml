@@ -1,0 +1,83 @@
+workflows:
+  ios-app-store:
+    name: Love Out Loud iOS App Store
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+
+    integrations:
+      app_store_connect: "Connection API Key"
+
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.exofters.loveoutloud
+
+      vars:
+        XCODE_WORKSPACE: "ios/App/App.xcworkspace"
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.exofters.loveoutloud"
+
+      node: 20
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm ci
+
+      - name: Build web assets
+        script: |
+          npm run build
+
+      - name: Sync Capacitor iOS
+        script: |
+          if [ ! -d "ios" ]; then
+            npx cap add ios
+          fi
+          npx cap sync ios
+
+      - name: Install CocoaPods
+        script: |
+          cd ios/App
+          pod install
+
+      - name: Set up code signing
+        script: |
+          xcode-project use-profiles
+
+      - name: Set iOS version
+        script: |
+          cd ios/App
+          agvtool new-marketing-version "2.4.2"
+
+      - name: Increment iOS build number
+        script: |
+          cd ios/App
+          CURRENT_BUILD=$(agvtool what-version -terse | tail -1)
+          NEXT_BUILD=$((CURRENT_BUILD + 1))
+          agvtool new-version -all "$NEXT_BUILD"
+          echo "Build number updated from $CURRENT_BUILD to $NEXT_BUILD"
+
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace "$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: dev
+          include: true
+          source: true
