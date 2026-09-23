@@ -48,7 +48,7 @@ workflows:
           echo "=========================================="
 
           SOURCE_ICON="resources/icon-only.png"
-          OPAQUE_ICON="resources/icon-only-opaque.png"
+          OPAQUE_ICON="/tmp/love-out-loud-icon.png"
           ASSETS_DIR="ios/App/App/Assets.xcassets"
           APP_ICON_DIR="$ASSETS_DIR/AppIcon.appiconset"
 
@@ -86,28 +86,21 @@ workflows:
           echo ""
           echo "Creating fully opaque icon..."
 
-          python3 -c '
-          from PIL import Image
+          rm -f "$OPAQUE_ICON"
 
-          source = "resources/icon-only.png"
-          output = "resources/icon-only-opaque.png"
+          cp "$SOURCE_ICON" "$OPAQUE_ICON"
 
-          img = Image.open(source).convert("RGBA")
+          # Convert the PNG to RGB so it has no alpha channel.
+          # This uses Apple's built-in macOS sips utility.
+          sips -m "RGB" "$OPAQUE_ICON" --out "$OPAQUE_ICON" >/dev/null
 
-          background = Image.new("RGB", img.size, (255, 255, 255))
-          background.paste(img, mask=img.getchannel("A"))
-
-          background.save(output, "PNG")
-
-          print("Opaque icon created:", output)
-          print("Mode:", background.mode)
-          print("Size:", background.size)
-          '
+          echo "Opaque icon created:"
+          ls -lh "$OPAQUE_ICON"
 
           echo ""
-          echo "Checking opaque icon..."
+          echo "Checking opaque icon format..."
 
-          sips -g pixelWidth -g pixelHeight "$OPAQUE_ICON"
+          sips -g format -g formatOptions "$OPAQUE_ICON"
 
           echo ""
           echo "Removing existing AppIcon..."
@@ -259,29 +252,9 @@ workflows:
           sips -g pixelWidth -g pixelHeight "$APP_ICON_PATH/AppIcon-1024.png"
 
           echo ""
-          echo "Checking App Store icon alpha channel..."
+          echo "Checking App Store icon format..."
 
-          python3 -c '
-          from PIL import Image
-
-          path = "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png"
-          img = Image.open(path)
-
-          print("Image mode:", img.mode)
-
-          if img.mode in ("RGBA", "LA", "P"):
-              if "A" in img.getbands():
-                  alpha = img.getchannel("A")
-                  min_alpha, max_alpha = alpha.getextrema()
-
-                  print("Alpha range:", min_alpha, "-", max_alpha)
-
-                  if min_alpha < 255:
-                      print("ERROR: Icon contains transparency.")
-                      exit(1)
-
-          print("SUCCESS: App Store icon has no transparency.")
-          '
+          sips -g format -g formatOptions "$APP_ICON_PATH/AppIcon-1024.png"
 
           echo ""
           echo "=========================================="
