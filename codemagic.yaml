@@ -23,25 +23,25 @@ workflows:
 
     scripts:
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 1. Install npm dependencies
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Install npm dependencies
         script: |
           npm ci
 
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 2. Build web assets
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Build web assets
         script: |
           npm run build
 
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 3. Add / sync Capacitor iOS
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Add / sync Capacitor iOS
         script: |
           if [ ! -d "ios" ]; then
@@ -51,194 +51,427 @@ workflows:
           npx cap sync ios
 
 
-      # ---------------------------------------------------------
-      # 4. Generate iOS app icon
+      # =========================================================
+      # 4. Generate iOS AppIcon.appiconset
       #
-      # Using:
+      # Source:
       # resources/icon-only.png
       #
-      # Your original file is NOT renamed or modified.
-      # ---------------------------------------------------------
-      - name: Generate iOS app icon
+      # This directly creates:
+      #
+      # ios/App/App/Assets.xcassets/AppIcon.appiconset
+      #
+      # We do NOT rename or modify icon-only.png.
+      # =========================================================
+      - name: Generate iOS App Icon
         script: |
+          set -e
+
           echo "=========================================="
-          echo "Preparing Love Out Loud iOS App Icon"
+          echo "LOVE OUT LOUD - iOS APP ICON GENERATION"
           echo "=========================================="
 
-          if [ ! -f "resources/icon-only.png" ]; then
-            echo "ERROR: resources/icon-only.png was not found!"
+          SOURCE_ICON="resources/icon-only.png"
+          ASSETS_DIR="ios/App/App/Assets.xcassets"
+          APP_ICON_DIR="$ASSETS_DIR/AppIcon.appiconset"
+
+          # -----------------------------------------------------
+          # Check source icon
+          # -----------------------------------------------------
+
+          if [ ! -f "$SOURCE_ICON" ]; then
+            echo "ERROR: $SOURCE_ICON was not found."
             exit 1
           fi
 
           echo ""
-          echo "Using icon:"
-          ls -lh resources/icon-only.png
+          echo "Source icon:"
+          ls -lh "$SOURCE_ICON"
 
           echo ""
-          echo "Checking icon dimensions..."
+          echo "Source icon dimensions:"
+          sips -g pixelWidth -g pixelHeight "$SOURCE_ICON"
 
-          sips -g pixelWidth -g pixelHeight resources/icon-only.png
-
-          WIDTH=$(sips -g pixelWidth resources/icon-only.png | tail -1 | awk '{print $2}')
-          HEIGHT=$(sips -g pixelHeight resources/icon-only.png | tail -1 | awk '{print $2}')
+          WIDTH=$(sips -g pixelWidth "$SOURCE_ICON" | tail -1 | awk '{print $2}')
+          HEIGHT=$(sips -g pixelHeight "$SOURCE_ICON" | tail -1 | awk '{print $2}')
 
           echo ""
-          echo "Icon width:  $WIDTH"
-          echo "Icon height: $HEIGHT"
+          echo "Width:  $WIDTH"
+          echo "Height: $HEIGHT"
 
           if [ "$WIDTH" -lt 1024 ] || [ "$HEIGHT" -lt 1024 ]; then
             echo ""
-            echo "ERROR: resources/icon-only.png must be at least 1024x1024."
+            echo "ERROR: icon-only.png must be at least 1024x1024."
             echo "Current size: ${WIDTH}x${HEIGHT}"
             exit 1
           fi
 
           echo ""
-          echo "Icon size is valid."
+          echo "Source icon size is valid."
 
 
           # -----------------------------------------------------
-          # Remove any previously generated AppIcon
+          # Check Assets.xcassets
           # -----------------------------------------------------
 
-          echo ""
-          echo "Removing old generated AppIcon files..."
-
-          find ios \
-            -type d \
-            -name "AppIcon.appiconset" \
-            -prune \
-            -exec rm -rf {} +
+          if [ ! -d "$ASSETS_DIR" ]; then
+            echo ""
+            echo "ERROR: $ASSETS_DIR does not exist."
+            echo ""
+            echo "Available Assets.xcassets directories:"
+            find ios -type d -name "Assets.xcassets" -print
+            exit 1
+          fi
 
 
           # -----------------------------------------------------
-          # Capacitor Assets expects icon.png for the simple
-          # icon-generation flow.
-          #
-          # We temporarily copy icon-only.png to icon.png.
-          # The original icon-only.png is NOT changed.
+          # Remove old AppIcon
           # -----------------------------------------------------
 
           echo ""
-          echo "Creating temporary icon.png..."
+          echo "Removing old AppIcon.appiconset if present..."
 
-          cp resources/icon-only.png resources/icon.png
-
-
-          # -----------------------------------------------------
-          # Generate iOS icons
-          # -----------------------------------------------------
-
-          echo ""
-          echo "Generating iOS app icons..."
-
-          npx @capacitor/assets generate \
-            --ios \
-            --assetPath resources
+          rm -rf "$APP_ICON_DIR"
 
 
           # -----------------------------------------------------
-          # Remove temporary file
+          # Create new AppIcon directory
           # -----------------------------------------------------
 
           echo ""
-          echo "Removing temporary icon.png..."
+          echo "Creating:"
+          echo "$APP_ICON_DIR"
 
-          rm -f resources/icon.png
+          mkdir -p "$APP_ICON_DIR"
+
+
+          # -----------------------------------------------------
+          # Generate iPhone icons
+          # -----------------------------------------------------
 
           echo ""
-          echo "iOS app icon generation completed."
+          echo "Generating iPhone icons..."
+
+          # Notification - 20pt
+          sips -z 40 40 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-20@2x.png" >/dev/null
+
+          sips -z 60 60 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-20@3x.png" >/dev/null
+
+          # Settings - 29pt
+          sips -z 58 58 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-29@2x.png" >/dev/null
+
+          sips -z 87 87 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-29@3x.png" >/dev/null
+
+          # Spotlight - 40pt
+          sips -z 80 80 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-40@2x.png" >/dev/null
+
+          sips -z 120 120 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-40@3x.png" >/dev/null
+
+          # App - 60pt
+          sips -z 120 120 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-60@2x.png" >/dev/null
+
+          sips -z 180 180 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-60@3x.png" >/dev/null
 
 
-      # ---------------------------------------------------------
-      # 5. Verify generated iOS AppIcon
-      # ---------------------------------------------------------
+          # -----------------------------------------------------
+          # Generate iPad icons
+          # -----------------------------------------------------
+
+          echo ""
+          echo "Generating iPad icons..."
+
+          # Notification - 20pt
+          sips -z 20 20 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-20.png" >/dev/null
+
+          sips -z 40 40 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-20@2x-ipad.png" >/dev/null
+
+          # Settings - 29pt
+          sips -z 29 29 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-29.png" >/dev/null
+
+          sips -z 58 58 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-29@2x-ipad.png" >/dev/null
+
+          # Spotlight - 40pt
+          sips -z 40 40 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-40.png" >/dev/null
+
+          sips -z 80 80 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-40@2x-ipad.png" >/dev/null
+
+          # iPad App - 76pt
+          sips -z 76 76 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-76.png" >/dev/null
+
+          sips -z 152 152 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-76@2x.png" >/dev/null
+
+          # iPad Pro - 83.5pt
+          sips -z 167 167 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-83.5@2x.png" >/dev/null
+
+
+          # -----------------------------------------------------
+          # App Store icon
+          # -----------------------------------------------------
+
+          echo ""
+          echo "Generating 1024x1024 App Store icon..."
+
+          sips -z 1024 1024 "$SOURCE_ICON" \
+            --out "$APP_ICON_DIR/AppIcon-1024.png" >/dev/null
+
+
+          # -----------------------------------------------------
+          # Create Contents.json
+          # -----------------------------------------------------
+
+          echo ""
+          echo "Creating Contents.json..."
+
+          cat > "$APP_ICON_DIR/Contents.json" <<'EOF'
+{
+  "images" : [
+    {
+      "filename" : "AppIcon-20.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "AppIcon-20@2x-ipad.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "AppIcon-29.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "AppIcon-29@2x-ipad.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "AppIcon-40.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "AppIcon-40@2x-ipad.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "AppIcon-76.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "AppIcon-76@2x.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "AppIcon-83.5@2x.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "AppIcon-20@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "AppIcon-20@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "AppIcon-29@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "AppIcon-29@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "AppIcon-40@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "AppIcon-40@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "AppIcon-60@2x.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "AppIcon-60@3x.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "AppIcon-1024.png",
+      "idiom" : "ios-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+EOF
+
+
+          # -----------------------------------------------------
+          # Verify generated files
+          # -----------------------------------------------------
+
+          echo ""
+          echo "=========================================="
+          echo "Generated AppIcon contents:"
+          echo "=========================================="
+
+          ls -lah "$APP_ICON_DIR"
+
+          echo ""
+          echo "Number of PNG files:"
+          find "$APP_ICON_DIR" -type f -name "*.png" | wc -l
+
+          echo ""
+          echo "AppIcon generation completed successfully."
+
+
+      # =========================================================
+      # 5. Verify iOS AppIcon
+      # =========================================================
       - name: Verify iOS app icon
         script: |
+          set -e
+
           echo "=========================================="
           echo "Checking generated iOS AppIcon"
           echo "=========================================="
 
-          APP_ICON_PATH=$(find ios -type d -name "AppIcon.appiconset" -print -quit)
+          APP_ICON_PATH="ios/App/App/Assets.xcassets/AppIcon.appiconset"
 
-          if [ -n "$APP_ICON_PATH" ]; then
-
-            echo ""
-            echo "SUCCESS!"
-            echo "AppIcon.appiconset found at:"
-            echo "$APP_ICON_PATH"
-
-            echo ""
-            echo "Contents:"
-            echo "------------------------------------------"
-
-            ls -lah "$APP_ICON_PATH"
-
-            echo ""
-            echo "Checking Contents.json..."
-
-            if [ -f "$APP_ICON_PATH/Contents.json" ]; then
-              echo "SUCCESS: Contents.json exists."
-            else
-              echo "ERROR: Contents.json is missing."
-              exit 1
-            fi
-
-            echo ""
-            echo "Checking generated icon images..."
-
-            IMAGE_COUNT=$(find "$APP_ICON_PATH" -type f \( \
-              -name "*.png" \
-              -o -name "*.jpg" \
-              -o -name "*.jpeg" \
-              \) | wc -l)
-
-            echo "Generated icon image count: $IMAGE_COUNT"
-
-            if [ "$IMAGE_COUNT" -gt 0 ]; then
-              echo "SUCCESS: iOS icon images were generated."
-            else
-              echo "ERROR: No icon images were generated."
-              exit 1
-            fi
-
-          else
-
+          if [ ! -d "$APP_ICON_PATH" ]; then
             echo ""
             echo "ERROR: AppIcon.appiconset was NOT found."
             echo ""
-            echo "Searching for Assets.xcassets..."
+            echo "Available Assets.xcassets directories:"
             find ios -type d -name "Assets.xcassets" -print
-
-            echo ""
-            echo "Searching for AppIcon files..."
-            find ios -iname "*AppIcon*" -print
-
             exit 1
-
           fi
 
+          echo ""
+          echo "SUCCESS!"
+          echo "AppIcon.appiconset found at:"
+          echo "$APP_ICON_PATH"
 
-      # ---------------------------------------------------------
+          echo ""
+          echo "Contents:"
+          echo "------------------------------------------"
+
+          ls -lah "$APP_ICON_PATH"
+
+          echo ""
+          echo "Checking Contents.json..."
+
+          if [ ! -f "$APP_ICON_PATH/Contents.json" ]; then
+            echo "ERROR: Contents.json is missing."
+            exit 1
+          fi
+
+          echo "SUCCESS: Contents.json exists."
+
+          echo ""
+          echo "Checking PNG files..."
+
+          IMAGE_COUNT=$(find "$APP_ICON_PATH" -type f -name "*.png" | wc -l)
+
+          echo "Generated PNG count: $IMAGE_COUNT"
+
+          if [ "$IMAGE_COUNT" -lt 10 ]; then
+            echo "ERROR: Not enough iOS icon images were generated."
+            exit 1
+          fi
+
+          echo "SUCCESS: iOS icon images exist."
+
+          echo ""
+          echo "Checking 1024x1024 App Store icon..."
+
+          if [ ! -f "$APP_ICON_PATH/AppIcon-1024.png" ]; then
+            echo "ERROR: AppIcon-1024.png is missing."
+            exit 1
+          fi
+
+          sips -g pixelWidth -g pixelHeight \
+            "$APP_ICON_PATH/AppIcon-1024.png"
+
+          echo ""
+          echo "=========================================="
+          echo "iOS AppIcon verification PASSED"
+          echo "=========================================="
+
+
+      # =========================================================
       # 6. Install CocoaPods
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Install CocoaPods
         script: |
           cd ios/App
           pod install
 
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 7. Set up code signing
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Set up code signing
         script: |
           xcode-project use-profiles
 
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 8. Set iOS version
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Set iOS version
         script: |
           cd ios/App
@@ -248,10 +481,11 @@ workflows:
           echo "iOS marketing version set to 2.4.2"
 
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 9. Set iOS build number
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Set iOS build number
+      # Build 3 already exists, so use Build 4.
         script: |
           cd ios/App
 
@@ -260,9 +494,9 @@ workflows:
           echo "iOS build number set to 4"
 
 
-      # ---------------------------------------------------------
+      # =========================================================
       # 10. Build IPA
-      # ---------------------------------------------------------
+      # =========================================================
       - name: Build IPA
         script: |
           echo "=========================================="
@@ -274,26 +508,26 @@ workflows:
             --scheme "$XCODE_SCHEME"
 
 
-    # -----------------------------------------------------------
+    # ===========================================================
     # Artifacts
-    # -----------------------------------------------------------
+    # ===========================================================
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
 
 
-    # -----------------------------------------------------------
+    # ===========================================================
     # App Store Connect / TestFlight
-    # -----------------------------------------------------------
+    # ===========================================================
     publishing:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
 
 
-    # -----------------------------------------------------------
+    # ===========================================================
     # Trigger
-    # -----------------------------------------------------------
+    # ===========================================================
     triggering:
       events:
         - push
