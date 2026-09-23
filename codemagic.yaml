@@ -26,11 +26,15 @@ workflows:
         script: |
           npm ci
 
+      - name: Generate app icons and splash assets
+        script: |
+          npx capacitor-assets generate
+
       - name: Build web assets
         script: |
           npm run build
 
-      - name: Sync Capacitor iOS
+      - name: Add / sync Capacitor iOS
         script: |
           if [ ! -d "ios" ]; then
             npx cap add ios
