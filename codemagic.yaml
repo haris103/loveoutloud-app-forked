@@ -48,6 +48,7 @@ workflows:
           echo "=========================================="
 
           SOURCE_ICON="resources/icon-only.png"
+          OPAQUE_ICON="resources/icon-only-opaque.png"
           ASSETS_DIR="ios/App/App/Assets.xcassets"
           APP_ICON_DIR="$ASSETS_DIR/AppIcon.appiconset"
 
@@ -83,6 +84,32 @@ workflows:
           fi
 
           echo ""
+          echo "Creating fully opaque icon..."
+
+          python3 -c '
+          from PIL import Image
+
+          source = "resources/icon-only.png"
+          output = "resources/icon-only-opaque.png"
+
+          img = Image.open(source).convert("RGBA")
+
+          background = Image.new("RGB", img.size, (255, 255, 255))
+          background.paste(img, mask=img.getchannel("A"))
+
+          background.save(output, "PNG")
+
+          print("Opaque icon created:", output)
+          print("Mode:", background.mode)
+          print("Size:", background.size)
+          '
+
+          echo ""
+          echo "Checking opaque icon..."
+
+          sips -g pixelWidth -g pixelHeight "$OPAQUE_ICON"
+
+          echo ""
           echo "Removing existing AppIcon..."
 
           rm -rf "$APP_ICON_DIR"
@@ -92,39 +119,39 @@ workflows:
           echo ""
           echo "Generating iPhone icons..."
 
-          sips -z 40 40 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-20@2x.png" >/dev/null
-          sips -z 60 60 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-20@3x.png" >/dev/null
+          sips -z 40 40 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-20@2x.png" >/dev/null
+          sips -z 60 60 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-20@3x.png" >/dev/null
 
-          sips -z 58 58 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-29@2x.png" >/dev/null
-          sips -z 87 87 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-29@3x.png" >/dev/null
+          sips -z 58 58 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-29@2x.png" >/dev/null
+          sips -z 87 87 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-29@3x.png" >/dev/null
 
-          sips -z 80 80 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-40@2x.png" >/dev/null
-          sips -z 120 120 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-40@3x.png" >/dev/null
+          sips -z 80 80 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-40@2x.png" >/dev/null
+          sips -z 120 120 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-40@3x.png" >/dev/null
 
-          sips -z 120 120 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-60@2x.png" >/dev/null
-          sips -z 180 180 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-60@3x.png" >/dev/null
+          sips -z 120 120 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-60@2x.png" >/dev/null
+          sips -z 180 180 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-60@3x.png" >/dev/null
 
           echo ""
           echo "Generating iPad icons..."
 
-          sips -z 20 20 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-20.png" >/dev/null
-          sips -z 40 40 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-20@2x-ipad.png" >/dev/null
+          sips -z 20 20 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-20.png" >/dev/null
+          sips -z 40 40 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-20@2x-ipad.png" >/dev/null
 
-          sips -z 29 29 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-29.png" >/dev/null
-          sips -z 58 58 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-29@2x-ipad.png" >/dev/null
+          sips -z 29 29 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-29.png" >/dev/null
+          sips -z 58 58 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-29@2x-ipad.png" >/dev/null
 
-          sips -z 40 40 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-40.png" >/dev/null
-          sips -z 80 80 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-40@2x-ipad.png" >/dev/null
+          sips -z 40 40 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-40.png" >/dev/null
+          sips -z 80 80 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-40@2x-ipad.png" >/dev/null
 
-          sips -z 76 76 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-76.png" >/dev/null
-          sips -z 152 152 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-76@2x.png" >/dev/null
+          sips -z 76 76 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-76.png" >/dev/null
+          sips -z 152 152 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-76@2x.png" >/dev/null
 
-          sips -z 167 167 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-83.5@2x.png" >/dev/null
+          sips -z 167 167 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-83.5@2x.png" >/dev/null
 
           echo ""
           echo "Generating App Store icon..."
 
-          sips -z 1024 1024 "$SOURCE_ICON" --out "$APP_ICON_DIR/AppIcon-1024.png" >/dev/null
+          sips -z 1024 1024 "$OPAQUE_ICON" --out "$APP_ICON_DIR/AppIcon-1024.png" >/dev/null
 
           echo ""
           echo "Creating Contents.json..."
@@ -143,6 +170,7 @@ workflows:
               {"filename":"AppIcon-76.png","idiom":"ipad","scale":"1x","size":"76x76"},
               {"filename":"AppIcon-76@2x.png","idiom":"ipad","scale":"2x","size":"76x76"},
               {"filename":"AppIcon-83.5@2x.png","idiom":"ipad","scale":"2x","size":"83.5x83.5"},
+
               {"filename":"AppIcon-20@2x.png","idiom":"iphone","scale":"2x","size":"20x20"},
               {"filename":"AppIcon-20@3x.png","idiom":"iphone","scale":"3x","size":"20x20"},
               {"filename":"AppIcon-29@2x.png","idiom":"iphone","scale":"2x","size":"29x29"},
@@ -151,6 +179,7 @@ workflows:
               {"filename":"AppIcon-40@3x.png","idiom":"iphone","scale":"3x","size":"40x40"},
               {"filename":"AppIcon-60@2x.png","idiom":"iphone","scale":"2x","size":"60x60"},
               {"filename":"AppIcon-60@3x.png","idiom":"iphone","scale":"3x","size":"60x60"},
+
               {"filename":"AppIcon-1024.png","idiom":"ios-marketing","scale":"1x","size":"1024x1024"}
           ]
 
@@ -164,6 +193,7 @@ workflows:
 
           path = Path("ios/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json")
           path.write_text(json.dumps(data, indent=2))
+
           print("Contents.json created successfully.")
           '
 
@@ -229,6 +259,31 @@ workflows:
           sips -g pixelWidth -g pixelHeight "$APP_ICON_PATH/AppIcon-1024.png"
 
           echo ""
+          echo "Checking App Store icon alpha channel..."
+
+          python3 -c '
+          from PIL import Image
+
+          path = "ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png"
+          img = Image.open(path)
+
+          print("Image mode:", img.mode)
+
+          if img.mode in ("RGBA", "LA", "P"):
+              if "A" in img.getbands():
+                  alpha = img.getchannel("A")
+                  min_alpha, max_alpha = alpha.getextrema()
+
+                  print("Alpha range:", min_alpha, "-", max_alpha)
+
+                  if min_alpha < 255:
+                      print("ERROR: Icon contains transparency.")
+                      exit(1)
+
+          print("SUCCESS: App Store icon has no transparency.")
+          '
+
+          echo ""
           echo "=========================================="
           echo "iOS AppIcon verification PASSED"
           echo "=========================================="
@@ -250,8 +305,8 @@ workflows:
       - name: Set iOS build number
         script: |
           cd ios/App
-          agvtool new-version -all "4"
-          echo "iOS build number set to 4"
+          agvtool new-version -all "5"
+          echo "iOS build number set to 5"
 
       - name: Build IPA
         script: |
