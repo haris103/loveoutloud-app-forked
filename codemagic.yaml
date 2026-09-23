@@ -32,7 +32,7 @@ workflows:
 
 
       # ---------------------------------------------------------
-      # 2. Build web application
+      # 2. Build web assets
       # ---------------------------------------------------------
       - name: Build web assets
         script: |
@@ -40,7 +40,7 @@ workflows:
 
 
       # ---------------------------------------------------------
-      # 3. Create / sync Capacitor iOS project
+      # 3. Add / sync Capacitor iOS
       # ---------------------------------------------------------
       - name: Add / sync Capacitor iOS
         script: |
@@ -52,17 +52,12 @@ workflows:
 
 
       # ---------------------------------------------------------
-      # 4. Prepare your existing app icon
+      # 4. Generate iOS app icon
       #
-      # Your REAL icon remains:
+      # Using:
+      # resources/icon-only.png
       #
-      # resources/app-icon.png
-      #
-      # We temporarily create:
-      #
-      # resources/icon.png
-      #
-      # We do NOT rename your original file.
+      # Your original file is NOT renamed or modified.
       # ---------------------------------------------------------
       - name: Generate iOS app icon
         script: |
@@ -70,49 +65,81 @@ workflows:
           echo "Preparing Love Out Loud iOS App Icon"
           echo "=========================================="
 
-          if [ ! -f "resources/app-icon.png" ]; then
-            echo "ERROR: resources/app-icon.png was not found!"
+          if [ ! -f "resources/icon-only.png" ]; then
+            echo "ERROR: resources/icon-only.png was not found!"
             exit 1
           fi
 
-          echo "Source icon found:"
-          ls -lh resources/app-icon.png
+          echo ""
+          echo "Using icon:"
+          ls -lh resources/icon-only.png
 
           echo ""
           echo "Checking icon dimensions..."
 
-          sips -g pixelWidth -g pixelHeight resources/app-icon.png
+          sips -g pixelWidth -g pixelHeight resources/icon-only.png
 
-          WIDTH=$(sips -g pixelWidth resources/app-icon.png | tail -1 | awk '{print $2}')
-          HEIGHT=$(sips -g pixelHeight resources/app-icon.png | tail -1 | awk '{print $2}')
+          WIDTH=$(sips -g pixelWidth resources/icon-only.png | tail -1 | awk '{print $2}')
+          HEIGHT=$(sips -g pixelHeight resources/icon-only.png | tail -1 | awk '{print $2}')
 
-          echo "Icon width: $WIDTH"
+          echo ""
+          echo "Icon width:  $WIDTH"
           echo "Icon height: $HEIGHT"
 
           if [ "$WIDTH" -lt 1024 ] || [ "$HEIGHT" -lt 1024 ]; then
-            echo "ERROR: Your app icon must be at least 1024x1024."
+            echo ""
+            echo "ERROR: resources/icon-only.png must be at least 1024x1024."
+            echo "Current size: ${WIDTH}x${HEIGHT}"
             exit 1
           fi
 
           echo ""
+          echo "Icon size is valid."
+
+
+          # -----------------------------------------------------
+          # Remove any previously generated AppIcon
+          # -----------------------------------------------------
+
+          echo ""
+          echo "Removing old generated AppIcon files..."
+
+          find ios \
+            -type d \
+            -name "AppIcon.appiconset" \
+            -prune \
+            -exec rm -rf {} +
+
+
+          # -----------------------------------------------------
+          # Capacitor Assets expects icon.png for the simple
+          # icon-generation flow.
+          #
+          # We temporarily copy icon-only.png to icon.png.
+          # The original icon-only.png is NOT changed.
+          # -----------------------------------------------------
+
+          echo ""
           echo "Creating temporary icon.png..."
 
-          cp resources/app-icon.png resources/icon.png
+          cp resources/icon-only.png resources/icon.png
 
-          echo "Temporary icon created:"
-          ls -lh resources/icon.png
 
-          echo ""
-          echo "Removing old generated AppIcon to prevent stale icons..."
-
-          find ios -type d -name "AppIcon.appiconset" -prune -exec rm -rf {} +
+          # -----------------------------------------------------
+          # Generate iOS icons
+          # -----------------------------------------------------
 
           echo ""
-          echo "Generating iOS icons..."
+          echo "Generating iOS app icons..."
 
           npx @capacitor/assets generate \
             --ios \
             --assetPath resources
+
+
+          # -----------------------------------------------------
+          # Remove temporary file
+          # -----------------------------------------------------
 
           echo ""
           echo "Removing temporary icon.png..."
@@ -120,11 +147,11 @@ workflows:
           rm -f resources/icon.png
 
           echo ""
-          echo "iOS icon generation finished."
+          echo "iOS app icon generation completed."
 
 
       # ---------------------------------------------------------
-      # 5. Find and verify the generated AppIcon
+      # 5. Verify generated iOS AppIcon
       # ---------------------------------------------------------
       - name: Verify iOS app icon
         script: |
@@ -142,7 +169,7 @@ workflows:
             echo "$APP_ICON_PATH"
 
             echo ""
-            echo "Contents of AppIcon.appiconset:"
+            echo "Contents:"
             echo "------------------------------------------"
 
             ls -lah "$APP_ICON_PATH"
@@ -161,9 +188,9 @@ workflows:
             echo "Checking generated icon images..."
 
             IMAGE_COUNT=$(find "$APP_ICON_PATH" -type f \( \
-              -name "*.png" -o \
-              -name "*.jpg" -o \
-              -name "*.jpeg" \
+              -name "*.png" \
+              -o -name "*.jpg" \
+              -o -name "*.jpeg" \
               \) | wc -l)
 
             echo "Generated icon image count: $IMAGE_COUNT"
@@ -223,9 +250,6 @@ workflows:
 
       # ---------------------------------------------------------
       # 9. Set iOS build number
-      #
-      # Build 3 already exists in TestFlight according to
-      # your screenshot, so the next build should be 4.
       # ---------------------------------------------------------
       - name: Set iOS build number
         script: |
