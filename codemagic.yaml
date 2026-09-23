@@ -55,13 +55,11 @@ workflows:
           cd ios/App
           agvtool new-marketing-version "2.4.2"
 
-      - name: Increment iOS build number
+      - name: Set iOS build number
         script: |
           cd ios/App
-          CURRENT_BUILD=$(agvtool what-version -terse | tail -1)
-          NEXT_BUILD=$((CURRENT_BUILD + 1))
-          agvtool new-version -all "$NEXT_BUILD"
-          echo "Build number updated from $CURRENT_BUILD to $NEXT_BUILD"
+          agvtool new-version -all "3"
+          echo "iOS build number set to 3"
 
       - name: Build IPA
         script: |
