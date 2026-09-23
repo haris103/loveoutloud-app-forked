@@ -22,45 +22,84 @@ workflows:
       cocoapods: default
 
     scripts:
+
+      # 1. Install dependencies
       - name: Install npm dependencies
         script: |
           npm ci
 
-      - name: Generate app icons and splash assets
-        script: |
-          npx capacitor-assets generate
-
+      # 2. Build the web application
       - name: Build web assets
         script: |
           npm run build
 
+      # 3. Create/sync the native iOS project
       - name: Add / sync Capacitor iOS
         script: |
           if [ ! -d "ios" ]; then
             npx cap add ios
           fi
+
           npx cap sync ios
 
+      # 4. Generate the iOS App Icon
+      # Keeps your original file:
+      # resources/app-icon.png
+      #
+      # A temporary icon.png is created only during the build
+      # because @capacitor/assets expects icon.png.
+      - name: Generate iOS app icon
+        script: |
+          echo "Preparing Love Out Loud app icon..."
+
+          cp resources/app-icon.png resources/icon.png
+
+          npx @capacitor/assets generate \
+            --ios \
+            --assetPath resources
+
+          rm resources/icon.png
+
+          echo "App icon generation completed."
+
+      # 5. Verify that the iOS AppIcon was generated
+      - name: Verify iOS app icon
+        script: |
+          echo "Checking generated iOS AppIcon..."
+
+          if [ -d "ios/App/Assets.xcassets/AppIcon.appiconset" ]; then
+            echo "SUCCESS: AppIcon.appiconset exists."
+            ls -la ios/App/Assets.xcassets/AppIcon.appiconset
+          else
+            echo "ERROR: AppIcon.appiconset was not generated."
+            exit 1
+          fi
+
+      # 6. Install CocoaPods
       - name: Install CocoaPods
         script: |
           cd ios/App
           pod install
 
+      # 7. Set up code signing
       - name: Set up code signing
         script: |
           xcode-project use-profiles
 
+      # 8. Set iOS version
       - name: Set iOS version
         script: |
           cd ios/App
           agvtool new-marketing-version "2.4.2"
 
+      # 9. Set iOS build number
       - name: Set iOS build number
         script: |
           cd ios/App
           agvtool new-version -all "3"
           echo "iOS build number set to 3"
 
+      # 10. Build IPA
       - name: Build IPA
         script: |
           xcode-project build-ipa \
@@ -79,6 +118,7 @@ workflows:
     triggering:
       events:
         - push
+
       branch_patterns:
         - pattern: dev
           include: true
